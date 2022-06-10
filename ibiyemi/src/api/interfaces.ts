@@ -5,6 +5,6 @@ export interface User {
 }
 
 export interface Token {
-  access?: string;
-  refresh?: string;
+  access: string;
+  refresh: string;
 }
