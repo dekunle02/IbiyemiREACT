@@ -1,3 +1,62 @@
+#root {
+  min-height: 100vh;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html body {
+    @apply h-full w-full m-0;
+    @apply text-colorBlack;
+  }
+}
+
+@layer components {
+  .button {
+    @apply bg-colorPrimary text-colorWhite rounded-xl
+         px-5 py-2 active:bg-colorPrimaryDark hover:bg-colorPrimaryDark;
+  }
+
+  .icon-button {
+    @apply flex flex-row gap-2 items-center;
+  }
+
+  .outline-button {
+    @apply text-colorPrimaryDark border border-colorPrimaryDark px-5 py-2 hover:bg-colorBlack/5 rounded-xl;
+  }
+
+  .text-button {
+    @apply px-5 py-3 text-colorPrimaryDark/70 rounded-full
+    hover:text-colorPrimaryDark/80 hover:bg-colorPrimaryDark/10 active:text-colorPrimaryDark active:bg-colorPrimaryDark/30;
+  }
+
+  .popup-card {
+    @apply rounded-2xl p-5 lg:px-10 bg-colorWhite w-[90vw] max-w-lg relative;
+  }
+}
+
+/* 
+ELEVATION MATERIAL GUIDELINE
+Dialog	24
+Modal bottom sheet Modal side sheet	 16
+Navigation drawer	 16
+Floating action button (FAB - pressed)	12
+Standard bottom sheet Standard side sheet	8
+Bottom navigation bar	8
+Bottom app bar	8
+Menus and sub menus	8
+Card (when picked up)	8
+Contained button (pressed state)	8
+Floating action button (FAB - resting elevation) Snackbar	6
+Top app bar (scrolled state)	4
+Top app bar (resting elevation)	0 or 4
+Refresh indicator Search bar (scrolled state)	3
+Contained button (resting elevation)	2
+Search bar (resting elevation)	1
+Card (resting elevation)	1
+Switch	1
+Text button	0
+Standard side sheet	0
+*/

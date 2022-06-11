@@ -46,7 +46,7 @@ export class DjangoClient {
   //   AUTH
   async signIn(formData: SignInFormData): Promise<ClientResponse> {
     return await this.axiosInstance
-      .post("account/signin/", formData)
+      .post("accounts/signin/", formData)
       .then((response) => ({
         status: RequestStatus.Success,
         data: response.data,

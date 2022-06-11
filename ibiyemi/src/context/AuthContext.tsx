@@ -9,7 +9,7 @@ import LoadingPage from "../pages/LoadingPage";
 type AuthProviderProps = {
   children: React.ReactNode;
 };
-const AuthContext = React.createContext(getDjango());
+const AuthContext = React.createContext<DjangoClient>(getDjango());
 
 export function useApi() {
   return useContext(AuthContext);

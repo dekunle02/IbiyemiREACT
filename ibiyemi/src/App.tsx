@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
-import { User, Token } from "./api/interfaces";
-import { useAppSelector, useAppDispatch } from "./redux/hooks";
-import { signIn, signOut } from "./redux/userSlice";
+// import { useState, useEffect } from "react";
+// import { User, Token } from "./api/interfaces";
+// import { useAppSelector, useAppDispatch } from "./redux/hooks";
+// import { signIn, signOut } from "./redux/userSlice";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // General
 import NotFoundPage from "./pages/NotFoundPage";
