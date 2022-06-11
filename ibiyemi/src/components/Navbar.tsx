@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
+import { useAppSelector } from "../redux/hooks";
+
 import { HiMenu, HiX } from "react-icons/hi";
 import logo from "../assets/images/company_logo.png";
 import { motion } from "framer-motion";
@@ -33,6 +35,7 @@ function NavLink({ link, children }: NavMenuItem) {
 }
 
 function Navbar() {
+  const user = useAppSelector((state) => state.user);
   const [showMobileMenu, setMobileMenuVisibility] = useState<boolean>(false);
   const toggleMobileMenu = () => {
     setMobileMenuVisibility(!showMobileMenu);
@@ -47,7 +50,7 @@ function Navbar() {
 
         <div className="hidden md:flex flex-row px-10 gap-3">
           <NavLink link="/">Store</NavLink>
-          <NavLink link="/manager">Manager</NavLink>
+          {user.type === "OWNER" && <NavLink link="/manager">Manager</NavLink>}
           <NavLink link="/profile">Profile</NavLink>
         </div>
 
