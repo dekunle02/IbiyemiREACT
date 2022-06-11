@@ -60,7 +60,7 @@ export class DjangoClient {
   async validateToken(token: Token): Promise<ClientResponse> {
     const data = { token: token.access };
     return await this.axiosInstance
-      .post("account/token/verify/", data)
+      .post("accounts/token/verify/", data)
       .then((response) => ({
         status: RequestStatus.Success,
         data: { message: "Token valid" },

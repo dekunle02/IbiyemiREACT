@@ -10,6 +10,7 @@
   html body {
     @apply h-full w-full m-0;
     @apply text-colorBlack;
+    @apply bg-colorWhite;
   }
 }
 

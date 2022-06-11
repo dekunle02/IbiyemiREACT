@@ -49,7 +49,7 @@ function FormInput({
         <textarea
           className={`${
             showError ? "ring-2 ring-colorRed border border-colorRed" : "border"
-          } w-full rounded-xl p-2 focus:border-colorPrimary focus:ring-colorPrimary focus:ring-2`}
+          } w-full rounded-lg p-2 focus:border-colorPrimary focus:ring-colorPrimary focus:ring-2`}
           id={id}
           {...otherProps}
         />
@@ -57,7 +57,7 @@ function FormInput({
         <input
           className={`${
             showError ? "ring-2 ring-colorRed border border-colorRed" : "border"
-          } w-full rounded-xl p-2  focus:border-colorPrimary focus:ring-colorPrimary focus:ring-2`}
+          } w-full rounded-lg p-2  focus:border-colorPrimary focus:ring-colorPrimary focus:ring-2`}
           type={isVisible ? "text" : initialType}
           id={id}
           {...otherProps}
@@ -110,7 +110,7 @@ function FormSelectInput({
 
       {/* INPUT */}
       <select
-        className="border w-full rounded-xl p-2 focus:border-colorPrimary focus:ring-colorPrimary focus:ring-2"
+        className="border w-full rounded-lg p-2 focus:border-colorPrimary focus:ring-colorPrimary focus:ring-2"
         id={id}
         {...otherProps}
       >

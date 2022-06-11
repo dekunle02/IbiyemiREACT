@@ -39,9 +39,9 @@ function SignInPage() {
   };
 
   return (
-    <div className="flex w-full h-full">
+    <div className="w-screen h-screen flex flex-col pt-20">
       {/* SIGN IN FORM */}
-      <div className="flex-col p-2 w-full rounded-3xl md:mx-auto md:border md:max-w-2xl md:p-10 md:my-5">
+      <div className="flex-col p-2 w-full rounded-2xl md:mx-auto md:border md:max-w-2xl md:p-10 md:my-5">
         <img src={companyLogo} alt="company" className="mx-auto" />
         <div className="m-3 md:mx-0 ">
           <Formik
