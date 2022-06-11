@@ -12,6 +12,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 
 // Auth
 import SignInPage from "./pages/SignInPage";
+import SignOutPage from "./pages/SignOutPage";
 
 // Application
 import Layout from "./pages/Layout";
@@ -38,6 +39,8 @@ function App() {
       <Routes>
         {/* LANDING PAGES */}
         <Route path="/signin" element={<SignInPage />} />
+        <Route path="/signout" element={<SignOutPage />} />
+
         <Route path="/" element={<Layout />}>
           <Route index element={<ShopIndex />} />
         </Route>
