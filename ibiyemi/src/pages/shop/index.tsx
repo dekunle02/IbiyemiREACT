@@ -1,10 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useApi } from "../../context/AuthContext";
+import { DjangoClient, RequestStatus } from "../../api/django";
+import { LoadStates } from "../../constants/constants";
+import LoadFailedMessage from "../../components/LoadFailedMessage";
+import Spinner from "../../components/Spinner";
 import { HiOutlineSearch, HiX } from "react-icons/hi";
 import { FormInput } from "../../components/FormInput";
+import ProductComponent from "./product.component";
+import { Product } from "../../api/interfaces";
 
 function ShopIndex() {
+  const django: DjangoClient = useApi();
   const [query, setQuery] = useState<string>("");
-  const [productArr, setProductArr] = useState([]);
+  const [productArr, setProductArr] = useState<Product[]>([]);
+  const [loadState, setLoadState] = useState<LoadStates>(LoadStates.Loading);
+
+  useEffect(() => {
+    django.getProducts().then((response) => {
+      if (response.status === RequestStatus.Success) {
+        setLoadState(LoadStates.Success);
+        console.log(response.data);
+        setProductArr(response.data);
+      } else {
+        setLoadState(LoadStates.Failure);
+      }
+    });
+  }, [django]);
 
   const handleSearchQueryChange = (event: React.ChangeEvent) => {
     const element = event.target as HTMLInputElement;
@@ -37,7 +58,21 @@ function ShopIndex() {
             {query.length > 0 ? <HiX /> : <HiOutlineSearch />}
           </button>
         </FormInput>
+
+        <div className="flex flex-col">
+          {loadState === LoadStates.Loading && <Spinner />}
+          {loadState === LoadStates.Failure && <LoadFailedMessage />}
+        </div>
       </div>
+
+      {/* PAGE CONTENT  */}
+      {loadState === LoadStates.Success && (
+        <div>
+          {productArr.map((prod) => (
+            <ProductComponent key={prod.id} product={prod} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

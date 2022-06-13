@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import { Token } from "./interfaces";
 import { SignInFormData } from "../constants/formData";
+import { Product } from "./interfaces";
 
 export enum RequestStatus {
   Success,
@@ -72,6 +73,20 @@ export class DjangoClient {
   }
 
   // AUTH END
+
+  // STORE FRONT
+  async getProducts(): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .get("inventory/products")
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data as Product[],
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: { message: "Token Invalid" },
+      }));
+  }
 }
 
 const getDjango = (token?: Token): DjangoClient => new DjangoClient(token);
