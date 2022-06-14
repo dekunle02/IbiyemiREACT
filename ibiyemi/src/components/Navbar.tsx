@@ -35,7 +35,7 @@ function NavLink({ link, children }: NavMenuItem) {
 }
 
 function Navbar() {
-  const user = useAppSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user.user);
   const [showMobileMenu, setMobileMenuVisibility] = useState<boolean>(false);
   const toggleMobileMenu = () => {
     setMobileMenuVisibility(!showMobileMenu);

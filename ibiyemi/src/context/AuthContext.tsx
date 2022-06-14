@@ -17,7 +17,7 @@ export function useApi() {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const location = useLocation();
-  const token = useAppSelector((state) => state.token);
+  const token = useAppSelector((state) => state.user.token);
   const [django, setDjango] = useState<DjangoClient>(getDjango());
   const [authState, setAuthState] = useState<LoadStates>(LoadStates.Loading);
 

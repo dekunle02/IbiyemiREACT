@@ -1,32 +1,55 @@
 import React, { useEffect, useState } from "react";
 import { useApi } from "../../context/AuthContext";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+import { setCartItemArr } from "../../redux/cartSlice";
+
+import { toast } from "react-toastify";
+import { toastConfig } from "../../constants/constants";
+import { HiOutlineSearch, HiX } from "react-icons/hi";
 import { DjangoClient, RequestStatus } from "../../api/django";
 import { LoadStates } from "../../constants/constants";
+import { Product, CartItem } from "../../api/interfaces";
+import { formatMoney } from "../../helpers/format-helpers";
+import { addProductToCartItemArr } from "../../helpers/cart-helpers";
+import { HelperStatus, HelperResult } from "../../helpers/interfaces";
+
+import { FormInput } from "../../components/FormInput";
+import Cart from "./cart.component";
 import LoadFailedMessage from "../../components/LoadFailedMessage";
 import Spinner from "../../components/Spinner";
-import { HiOutlineSearch, HiX } from "react-icons/hi";
-import { FormInput } from "../../components/FormInput";
-import ProductComponent from "./product.component";
-import { Product } from "../../api/interfaces";
 
 function ShopIndex() {
+  const dispatch = useAppDispatch();
   const django: DjangoClient = useApi();
   const [query, setQuery] = useState<string>("");
   const [productArr, setProductArr] = useState<Product[]>([]);
+  const [displayedProductArr, setDisplayedProductArr] = useState<Product[]>([]);
+  const cartItemArr: CartItem[] = useAppSelector(
+    (state) => state.cart.cartItemArr
+  );
   const [loadState, setLoadState] = useState<LoadStates>(LoadStates.Loading);
 
+  console.log("rerendered");
   useEffect(() => {
     django.getProducts().then((response) => {
       if (response.status === RequestStatus.Success) {
         setLoadState(LoadStates.Success);
-        console.log(response.data);
         setProductArr(response.data);
+        setDisplayedProductArr(response.data);
       } else {
         setLoadState(LoadStates.Failure);
       }
     });
   }, [django]);
 
+  useEffect(() => {
+    const mappedProducts: Product[] = productArr.filter((product) =>
+      product.name.toLowerCase().includes(query.trim().toLowerCase())
+    );
+    setDisplayedProductArr(mappedProducts);
+  }, [query, productArr]);
+
+  // Handlers
   const handleSearchQueryChange = (event: React.ChangeEvent) => {
     const element = event.target as HTMLInputElement;
     setQuery(element.value);
@@ -38,10 +61,22 @@ function ShopIndex() {
     }
   };
 
+  const handleProductClick = (product: Product) => {
+    const result: HelperResult<CartItem[]> = addProductToCartItemArr(
+      product,
+      cartItemArr
+    );
+    if (result.status === HelperStatus.Success) {
+      dispatch(setCartItemArr(result.data));
+    } else {
+      toast.warn(result.message, toastConfig);
+    }
+  };
+
   return (
-    <div className="w-full h-full flex flex-col">
+    <div className="w-full h-[calc(100vh-4rem)] flex flex-col">
       {/* SEARCH BAR */}
-      <div className="relative w-5/6 md:w-3/4 mx-auto py-10">
+      <div className="relative w-5/6 md:w-3/4 mx-auto pt-10 pb-5">
         <FormInput
           id="query"
           name="query"
@@ -67,10 +102,59 @@ function ShopIndex() {
 
       {/* PAGE CONTENT  */}
       {loadState === LoadStates.Success && (
-        <div>
-          {productArr.map((prod) => (
-            <ProductComponent key={prod.id} product={prod} />
-          ))}
+        <div className="flex flex-row px-3 justify-around overflow-scroll">
+          {/* PRODUCT LIST */}
+          <div className="flex flex-col gap-5 w-3/5 px-10 overflow-auto max-h-full">
+            {displayedProductArr.map((product) => (
+              // PRODUCT
+              <div
+                key={product.id}
+                onClick={() => handleProductClick(product)}
+                className="flex flex-row rounded-lg border cursor-pointer hover:bg-colorBlack/5"
+              >
+                <div className="flex flex-col flex-grow p-5">
+                  <p className="text-2xl mb-3">{product.name}</p>
+                  <p>
+                    Unit Price (1):{" "}
+                    <span className="text-xl font-semibold">
+                      {formatMoney(product.unit_sell_price)}
+                    </span>
+                  </p>
+                  {!!product.pack_sell_price && !!product.pack_quantity && (
+                    <p>
+                      Pack Price ({product.pack_quantity}):{" "}
+                      {formatMoney(product.pack_sell_price)}
+                    </p>
+                  )}
+                  {!!product.dozen_sell_price && (
+                    <p>
+                      Dozen Price (12): {formatMoney(product.dozen_sell_price)}
+                    </p>
+                  )}
+                </div>
+
+                <div
+                  className={`flex flex-col p-4 rounded justify-center items-center 
+                ${
+                  product.quantity === 0
+                    ? "bg-colorRed/50"
+                    : product.notify_quantity &&
+                      product.quantity <= product.notify_quantity
+                    ? "bg-orange-200"
+                    : "bg-colorGreen/50"
+                }`}
+                >
+                  <span>Stock</span>
+                  <span className="text-2xl font-semibold">
+                    {product.quantity}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* CART */}
+          <Cart cartItemArr={cartItemArr} />
         </div>
       )}
     </div>

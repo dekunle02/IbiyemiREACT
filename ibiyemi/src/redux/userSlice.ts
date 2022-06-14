@@ -19,12 +19,12 @@ export const userSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    signOut: (state) => {
+    signOut: (state: UserState) => {
       state.user = initialState.user;
       state.token = initialState.token;
     },
     // Use the PayloadAction type to declare the contents of `action.payload`
-    setUserAndToken: (state, action: PayloadAction<UserState>) => {
+    setUserAndToken: (state: UserState, action: PayloadAction<UserState>) => {
       state.user = action.payload.user;
       state.token = action.payload.token;
     },

@@ -115,9 +115,9 @@ export function setProductQuantityInCartItemArr(
   };
 }
 
-export function calculateCartItemSellingPrice(): number {
+export function calculateCartItemSellingPrice(cartItem: CartItem): number {
   // calculates the total selling price for a given cartItem
-  return 0;
+  return cartItem.product.unit_sell_price * cartItem.quantity;
 }
 
 export function calculateCartSellingPrice(): number {

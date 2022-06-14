@@ -20,6 +20,10 @@
          px-5 py-2 active:bg-colorPrimaryDark hover:bg-colorPrimaryDark;
   }
 
+  .inactive-button {
+    @apply bg-colorBlack/10 text-colorBlack/60 rounded-xl px-5 py-2 cursor-not-allowed pointer-events-none;
+  }
+
   .icon-button {
     @apply flex flex-row gap-2 items-center;
   }
