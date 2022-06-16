@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useApi } from "../../context/AuthContext";
-import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { setCartItemArr } from "../../redux/cartSlice";
 
 import { toast } from "react-toastify";
@@ -12,6 +11,7 @@ import { Product, CartItem } from "../../api/interfaces";
 import { formatMoney } from "../../helpers/format-helpers";
 import { addProductToCartItemArr } from "../../helpers/cart-helpers";
 import { HelperStatus, HelperResult } from "../../helpers/interfaces";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 
 import { FormInput } from "../../components/FormInput";
 import Cart from "./cart.component";
@@ -29,7 +29,6 @@ function ShopIndex() {
   );
   const [loadState, setLoadState] = useState<LoadStates>(LoadStates.Loading);
 
-  console.log("rerendered");
   useEffect(() => {
     django.getProducts().then((response) => {
       if (response.status === RequestStatus.Success) {
@@ -102,9 +101,9 @@ function ShopIndex() {
 
       {/* PAGE CONTENT  */}
       {loadState === LoadStates.Success && (
-        <div className="flex flex-row px-3 justify-around overflow-scroll">
+        <div className="flex flex-row px-3 gap-2 justify-around overflow-scroll">
           {/* PRODUCT LIST */}
-          <div className="flex flex-col gap-5 w-3/5 px-10 overflow-auto max-h-full">
+          <div className="flex flex-col gap-5 w-3/5 px-5 overflow-auto max-h-full">
             {displayedProductArr.map((product) => (
               // PRODUCT
               <div
@@ -154,7 +153,7 @@ function ShopIndex() {
           </div>
 
           {/* CART */}
-          <Cart cartItemArr={cartItemArr} />
+          <Cart />
         </div>
       )}
     </div>

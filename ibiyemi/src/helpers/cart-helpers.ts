@@ -1,5 +1,6 @@
 import { HelperResult, HelperStatus } from "./interfaces";
 import { CartItem, Product } from "../api/interfaces";
+import { divmod } from "./format-helpers";
 
 // adds a product to the cartItem arr if the product is not in the cartItem arr,
 // if it does, it increases its count by 1
@@ -22,15 +23,15 @@ export function addProductToCartItemArr(
     const item: CartItem = newArr[i];
     if (item.product.id.toString() === product.id.toString()) {
       productAlreadyExists = true;
-      item.quantity += 1;
-      if (item.quantity > product.quantity) {
+      const newQuantity = item.quantity + 1;
+      if (newQuantity > product.quantity) {
         return {
           status: HelperStatus.Failure,
           data: arr,
           message: `Only ${product.quantity} items left in stock`,
         };
       }
-      newArr[i] = item;
+      newArr[i] = { ...item, quantity: newQuantity };
     }
   }
 
@@ -74,8 +75,7 @@ export function decreaseProductQuantityFromCartItemArr(
   if (cartItem.quantity === 1) {
     newArr.splice(index, 1);
   } else {
-    cartItem.quantity -= 1;
-    newArr[index] = cartItem;
+    newArr[index] = { ...cartItem, quantity: cartItem.quantity - 1 };
   }
   return {
     status: HelperStatus.Success,
@@ -87,13 +87,20 @@ export function decreaseProductQuantityFromCartItemArr(
 // if the incoming quantity 0, it removes the item
 // if the cartItem quantity is > than product quantity, it returns an error
 export function setProductQuantityInCartItemArr(
-  newQuantity: number,
+  newQuantity: number | string,
   product: Product,
   arr: CartItem[]
 ): HelperResult<CartItem[]> {
   if (newQuantity === 0) {
     return removeProductFromCartItemArr(product, arr);
   }
+
+  if (newQuantity === "") {
+    newQuantity = 0;
+  }
+
+  newQuantity = parseInt(newQuantity as string);
+
   if (newQuantity > product.quantity) {
     return {
       status: HelperStatus.Failure,
@@ -106,8 +113,7 @@ export function setProductQuantityInCartItemArr(
     return item.product.id.toString() === product.id.toString();
   });
   const cartItem = arr[index];
-  cartItem.quantity = newQuantity;
-  newArr[index] = cartItem;
+  newArr[index] = { ...cartItem, quantity: newQuantity };
 
   return {
     status: HelperStatus.Success,
@@ -115,12 +121,64 @@ export function setProductQuantityInCartItemArr(
   };
 }
 
+// calculates the total selling price for a given cartItem
 export function calculateCartItemSellingPrice(cartItem: CartItem): number {
-  // calculates the total selling price for a given cartItem
-  return cartItem.product.unit_sell_price * cartItem.quantity;
+  return calculateProductBulKSellPrice(cartItem.product, cartItem.quantity);
 }
 
-export function calculateCartSellingPrice(): number {
-  // calculates the total selling price for the cart in total
-  return 0;
+function calculateProductBulKSellPrice(
+  product: Product,
+  quantity: number
+): number {
+  if (quantity <= 1) {
+    return product.unit_sell_price * quantity;
+  }
+  const fields: string[] = [
+    "pack_sell_price",
+    "dozen_sell_price",
+    "unit_sell_price",
+  ];
+  const field_quantities = {
+    unit_sell_price: 1,
+    dozen_sell_price: 6,
+    pack_sell_price: product.pack_quantity
+      ? product.pack_quantity / 2
+      : product.unit_sell_price,
+  };
+  const field_prices = {
+    unit_sell_price: product.unit_sell_price,
+    dozen_sell_price: product.dozen_sell_price
+      ? product.dozen_sell_price / 2
+      : product.unit_sell_price,
+    pack_sell_price: product.pack_sell_price
+      ? product.pack_sell_price / 2
+      : product.unit_sell_price,
+  };
+  let denumerator = 1;
+  let price = product.unit_sell_price;
+
+  for (let i = 0; i < fields.length; i++) {
+    const field: string = fields[i];
+    if (
+      product[field as keyof Product]! > 0 &&
+      quantity >= field_quantities[field as keyof typeof field_quantities]!
+    ) {
+      denumerator = field_quantities[field as keyof typeof field_quantities];
+      price = field_prices[field as keyof typeof field_prices]!;
+      break;
+    }
+  }
+  const [quotient, remainder] = divmod(quantity, denumerator);
+  return quotient * price + calculateProductBulKSellPrice(product, remainder);
+}
+
+// calculates the total selling price for the cart in total
+export function calculateCartSellingPrice(arr: CartItem[]): number {
+  const initialValue = 0;
+  const sumWithInitial = arr.reduce(
+    (previousValue, currentValue) =>
+      previousValue + calculateCartItemSellingPrice(currentValue),
+    initialValue
+  );
+  return sumWithInitial;
 }
