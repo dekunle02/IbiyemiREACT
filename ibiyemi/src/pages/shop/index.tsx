@@ -14,7 +14,7 @@ import { HelperStatus, HelperResult } from "../../helpers/interfaces";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 
 import { FormInput } from "../../components/FormInput";
-import Cart from "./cart.component";
+import Cart from "./Cart";
 import LoadFailedMessage from "../../components/LoadFailedMessage";
 import Spinner from "../../components/Spinner";
 
@@ -101,9 +101,9 @@ function ShopIndex() {
 
       {/* PAGE CONTENT  */}
       {loadState === LoadStates.Success && (
-        <div className="flex flex-row px-3 gap-2 justify-around overflow-scroll">
+        <div className="flex flex-col md:flex-row px-3 gap-2 justify-around overflow-scroll">
           {/* PRODUCT LIST */}
-          <div className="flex flex-col gap-5 w-3/5 px-5 overflow-auto max-h-full">
+          <div className="flex flex-col gap-5 w-full md:w-3/5 px-5 overflow-auto max-h-full">
             {displayedProductArr.map((product) => (
               // PRODUCT
               <div

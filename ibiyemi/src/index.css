@@ -20,6 +20,11 @@
          px-5 py-2 active:bg-colorPrimaryDark hover:bg-colorPrimaryDark;
   }
 
+  .success-button {
+    @apply bg-colorGreen text-colorWhite rounded-xl
+         px-5 py-2 active:bg-colorGreenDark hover:bg-colorGreenDark;
+  }
+
   .inactive-button {
     @apply bg-colorBlack/10 text-colorBlack/60 rounded-xl px-5 py-2 cursor-not-allowed pointer-events-none;
   }

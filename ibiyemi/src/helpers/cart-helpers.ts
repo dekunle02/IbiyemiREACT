@@ -182,3 +182,37 @@ export function calculateCartSellingPrice(arr: CartItem[]): number {
   );
   return sumWithInitial;
 }
+
+export function describeProductQuantity(
+  product: Product,
+  quantity: number
+): string {
+  // Has a pack quantity
+  if (product.pack_quantity && product.pack_quantity > 0) {
+    const [quotient, remainder] = divmod(quantity, product.pack_quantity);
+    if (quotient === 0) {
+      return `${quantity} unit(s)`;
+    }
+    return `${quotient} pack(s) ${remainder} unit(s)`;
+  }
+
+  // Has a dozen quantity
+  if (product.dozen_sell_price && product.dozen_sell_price > 0) {
+    const [quotient, remainder] = divmod(quantity, 12);
+    if (quotient === 0) {
+      return `${quantity} unit(s)`;
+    }
+    return `${quotient} dozen(s) ${remainder} unit(s)`;
+  }
+
+  return `${quantity} unit(s)`;
+}
+
+export function calculateTotalItemsInCart(arr: CartItem[]) {
+  const initialValue = 0;
+  const total = arr.reduce(
+    (previousValue, currentItem) => previousValue + currentItem.quantity,
+    initialValue
+  );
+  return total;
+}

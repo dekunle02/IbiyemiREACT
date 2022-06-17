@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios";
-import { Token } from "./interfaces";
+import { Customer, Token, Product, CartItem } from "./interfaces";
 import { SignInFormData } from "../constants/formData";
-import { Product } from "./interfaces";
+import {} from "./interfaces";
 
 export enum RequestStatus {
   Success,
@@ -78,6 +78,35 @@ export class DjangoClient {
   async getProducts(): Promise<ClientResponse> {
     return await this.axiosInstance
       .get("inventory/products")
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data as Product[],
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: { message: "Token Invalid" },
+      }));
+  }
+
+  async makeSale(
+    customer: Customer,
+    cartItemArr: CartItem[]
+  ): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .post("store/sell", { customer: customer, cart: cartItemArr })
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data as Product[],
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: { message: "Token Invalid" },
+      }));
+  }
+
+  async getReceipt(receiptId: string): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .get(`receipts/${receiptId}`)
       .then((response) => ({
         status: RequestStatus.Success,
         data: response.data as Product[],

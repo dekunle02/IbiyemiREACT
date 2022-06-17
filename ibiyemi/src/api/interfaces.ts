@@ -36,3 +36,10 @@ export interface CartItem {
   product: Product;
   quantity: number;
 }
+
+export interface Customer {
+  name?: string;
+  address?: string;
+  email?: string;
+  phone_number?: string;
+}

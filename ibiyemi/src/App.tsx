@@ -19,6 +19,8 @@ import Layout from "./pages/Layout";
 
 // Shop
 import ShopIndex from "./pages/shop";
+import CheckoutPage from "./pages/shop/CheckoutPage";
+import ReceiptPage from "./pages/shop/Receipt";
 
 function App() {
   // const user = useAppSelector((state) => state.user);
@@ -43,6 +45,8 @@ function App() {
 
         <Route path="/" element={<Layout />}>
           <Route index element={<ShopIndex />} />
+          <Route path="checkout" element={<CheckoutPage />} />
+          <Route path="receipt/:id" element={<ReceiptPage />} />
         </Route>
 
         {/* 404 PAGE */}

@@ -6,8 +6,8 @@ import { setUserAndToken } from "../redux/userSlice";
 import { Formik } from "formik";
 import { signInSchema } from "../constants/yupSchemas";
 import { toastConfig } from "../constants/constants";
-import { SignInFormData } from "../constants/formData";
 import { toast } from "react-toastify";
+import { SignInFormData } from "../constants/formData";
 import { FormInput } from "../components/FormInput";
 
 import companyLogo from "../assets/images/company_logo.png";
