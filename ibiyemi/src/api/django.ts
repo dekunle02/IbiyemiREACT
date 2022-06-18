@@ -136,9 +136,11 @@ export class DjangoClient {
         data: { message: "Token Invalid" },
       }));
   }
-}
+  // STORE END
 
-// STORE END
+  // PROFILE
+  // PROFILE END
+}
 
 const getDjango = (token?: Token): DjangoClient => new DjangoClient(token);
 export default getDjango;

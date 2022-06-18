@@ -22,6 +22,12 @@ import ShopIndex from "./pages/shop";
 import CheckoutPage from "./pages/shop/CheckoutPage";
 import ReceiptPage from "./pages/shop/Receipt";
 
+// Profile
+import ProfileIndex from "./pages/profile";
+
+// Manager
+import ManagerLayout from "./pages/manager/layout";
+
 function App() {
   // const user = useAppSelector((state) => state.user);
   // const token = useAppSelector((state) => state.token);
@@ -47,6 +53,9 @@ function App() {
           <Route index element={<ShopIndex />} />
           <Route path="checkout" element={<CheckoutPage />} />
           <Route path="receipt/:id" element={<ReceiptPage />} />
+          <Route path="profile" element={<ProfileIndex />} />
+
+          <Route path="manager" element={<ManagerLayout />}></Route>
         </Route>
 
         {/* 404 PAGE */}

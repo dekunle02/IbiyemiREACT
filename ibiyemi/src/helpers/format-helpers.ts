@@ -15,6 +15,12 @@ export function divmod(numerator: number, denumerator: number): number[] {
 /**
  * takes a raw date string received from the backend and converts it to a displayable string
  */
-export function formatRawDate(dateString: string) {
+export function formatRawDate(dateString: string): string {
   return dayjs(dateString).format("DD/MM/YYYY");
 }
+
+export const capitalizeSentence = (str: string): string =>
+  str.replace(
+    /(^\w|\s\w)(\S*)/g,
+    (_, m1, m2) => m1.toUpperCase() + m2.toLowerCase()
+  );
