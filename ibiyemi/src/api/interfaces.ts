@@ -33,6 +33,7 @@ export interface Product {
 }
 
 export interface CartItem {
+  id?: number;
   product: Product;
   quantity: number;
 }
@@ -42,4 +43,31 @@ export interface Customer {
   address?: string;
   email?: string;
   phone_number?: string;
+}
+
+export interface PaymentData {
+  amount_received: number;
+  payment_method: string;
+}
+
+export interface Sale {
+  id: number;
+  amount_received: number;
+  change: number;
+  complete: boolean;
+  cost_price: number;
+  customer: Customer;
+  date_ordered: string;
+  payment_method: string;
+  profit: number;
+  sale_items: CartItem[];
+  sell_price: number;
+  transaction_id: string;
+  user: User;
+}
+
+export interface BusinessInfo {
+  address: string;
+  phone_numbers: string;
+  receipt_message: string;
 }

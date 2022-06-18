@@ -16,7 +16,7 @@ import {
   describeProductQuantity,
   calculateTotalItemsInCart,
 } from "../../helpers/cart-helpers";
-import { CartItem } from "../../api/interfaces";
+import { CartItem, PaymentData } from "../../api/interfaces";
 import { formatMoney, commaSeparateNumber } from "../../helpers/format-helpers";
 import { CustomerFormData } from "../../constants/formData";
 import { RequestStatus } from "../../api/django";
@@ -53,8 +53,12 @@ function CheckoutPage() {
 
   //   CUSTOMER FORM SUBMIT CO-OPTED TO SUBMIT ALL PAGE DATA
   const handleSubmit = (values: CustomerFormData) => {
+    const paymentData: PaymentData = {
+      amount_received: realAmountReceived,
+      payment_method: paymentMethod,
+    };
     const toastId = toast.loading("Making Sale..", toastConfig);
-    django.makeSale(values, cartItemArr).then((response) => {
+    django.makeSale(values, cartItemArr, paymentData).then((response) => {
       if (response.status === RequestStatus.Success) {
         toast.dismiss(toastId);
         dispatch(clearCartItemArr());

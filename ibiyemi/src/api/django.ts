@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from "axios";
-import { Customer, Token, Product, CartItem } from "./interfaces";
+import { Customer, Token, Product, CartItem, PaymentData } from "./interfaces";
 import { SignInFormData } from "../constants/formData";
 import {} from "./interfaces";
 
@@ -74,6 +74,21 @@ export class DjangoClient {
 
   // AUTH END
 
+  // MANAGER START
+  async getBusinessInfo(): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .get("manager/businessinfos/1")
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: { message: "Sth went wrong.." },
+      }));
+  }
+  // MANAGER END
+
   // STORE FRONT
   async getProducts(): Promise<ClientResponse> {
     return await this.axiosInstance
@@ -90,10 +105,15 @@ export class DjangoClient {
 
   async makeSale(
     customer: Customer,
-    cartItemArr: CartItem[]
+    cartItemArr: CartItem[],
+    paymentData: PaymentData
   ): Promise<ClientResponse> {
     return await this.axiosInstance
-      .post("store/sell", { customer: customer, cart: cartItemArr })
+      .post("store/sales/", {
+        customer: customer,
+        cart: cartItemArr,
+        payment_data: paymentData,
+      })
       .then((response) => ({
         status: RequestStatus.Success,
         data: response.data as Product[],
@@ -104,9 +124,9 @@ export class DjangoClient {
       }));
   }
 
-  async getReceipt(receiptId: string): Promise<ClientResponse> {
+  async getSale(saleId: string): Promise<ClientResponse> {
     return await this.axiosInstance
-      .get(`receipts/${receiptId}`)
+      .get(`store/sales/${saleId}`)
       .then((response) => ({
         status: RequestStatus.Success,
         data: response.data as Product[],
@@ -117,6 +137,8 @@ export class DjangoClient {
       }));
   }
 }
+
+// STORE END
 
 const getDjango = (token?: Token): DjangoClient => new DjangoClient(token);
 export default getDjango;
