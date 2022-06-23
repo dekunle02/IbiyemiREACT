@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 
 interface NavMenuItem extends React.HTMLAttributes<HTMLDivElement> {
   link: string;
+  onClick?: () => void;
 }
 
 const variants = {
@@ -15,13 +16,14 @@ const variants = {
   closed: { opacity: 0, y: "-100%" },
 };
 
-function NavLink({ link, children }: NavMenuItem) {
+function NavLink({ link, children, onClick }: NavMenuItem) {
   const resolvedLink = useResolvedPath(link);
   const match = useMatch({ path: resolvedLink.pathname, end: true });
 
   return (
     <Link
       to={resolvedLink}
+      onClick={onClick}
       className={`text-xl py-5 text-colorBlack/50 px-3 text-center
         ${
           match
@@ -71,9 +73,15 @@ function Navbar() {
         variants={variants}
         className={`${showMobileMenu ? "flex" : "hidden"}  flex-col p-2`}
       >
-        <NavLink link="/">Store</NavLink>
-        <NavLink link="/manager">Manager</NavLink>
-        <NavLink link="/profile">Profile</NavLink>
+        <NavLink link="/" onClick={toggleMobileMenu}>
+          Store
+        </NavLink>
+        <NavLink link="/manager" onClick={toggleMobileMenu}>
+          Manager
+        </NavLink>
+        <NavLink link="/profile" onClick={toggleMobileMenu}>
+          Profile
+        </NavLink>
       </motion.div>
     </nav>
   );

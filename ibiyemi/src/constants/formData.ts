@@ -9,3 +9,12 @@ export type CustomerFormData = {
   email?: string;
   phone_number?: string;
 };
+
+export type ChangeUserNameFormData = {
+  username: string;
+};
+
+export type ChangePasswordFormData = {
+  old_password: string;
+  password: string;
+};

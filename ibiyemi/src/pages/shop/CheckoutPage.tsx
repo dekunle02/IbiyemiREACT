@@ -110,7 +110,7 @@ function CheckoutPage() {
 
   return (
     <div className="p-5 w-full flex flex-col md:grid md:grid-cols-3 md:grid-rows-[min-content_1fr_min-content] gap-5">
-      <div className="col-span-3 ">
+      <div className="col-span-3 relative py-5">
         <BackButton />
       </div>
 

@@ -23,7 +23,10 @@ import CheckoutPage from "./pages/shop/CheckoutPage";
 import ReceiptPage from "./pages/shop/Receipt";
 
 // Profile
+import ProfileLayout from "./pages/profile/layout";
 import ProfileIndex from "./pages/profile";
+import ChangeUsername from "./pages/profile/change-username";
+import ChangePassword from "./pages/profile/change-password";
 
 // Manager
 import ManagerLayout from "./pages/manager/layout";
@@ -53,7 +56,12 @@ function App() {
           <Route index element={<ShopIndex />} />
           <Route path="checkout" element={<CheckoutPage />} />
           <Route path="receipt/:id" element={<ReceiptPage />} />
-          <Route path="profile" element={<ProfileIndex />} />
+
+          <Route path="profile" element={<ProfileLayout />}>
+            <Route index element={<ProfileIndex />} />
+            <Route path="change-password" element={<ChangePassword />} />
+            <Route path="change-username" element={<ChangeUsername />} />
+          </Route>
 
           <Route path="manager" element={<ManagerLayout />}></Route>
         </Route>

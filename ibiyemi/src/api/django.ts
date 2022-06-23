@@ -1,6 +1,10 @@
 import axios, { AxiosInstance } from "axios";
 import { Customer, Token, Product, CartItem, PaymentData } from "./interfaces";
-import { SignInFormData } from "../constants/formData";
+import {
+  SignInFormData,
+  ChangePasswordFormData,
+  ChangeUserNameFormData,
+} from "../constants/formData";
 import {} from "./interfaces";
 
 export enum RequestStatus {
@@ -139,6 +143,21 @@ export class DjangoClient {
   // STORE END
 
   // PROFILE
+  async changeProfileInfo(
+    formData: ChangePasswordFormData | ChangeUserNameFormData
+  ): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .post("accounts/update/", formData)
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
+      }));
+  }
+
   // PROFILE END
 }
 

@@ -15,7 +15,7 @@ function BackButton() {
   return (
     <button
       onClick={navigateBack}
-      className="p-3 mx-2 rounded-full text-2xl md:hover:bg-colorBlack/10 active:bg-colorBlack/20"
+      className="p-3 mx-2 rounded-full text-2xl md:hover:bg-colorBlack/10 active:bg-colorBlack/20 absolute top-0 left-2 md:left-10"
     >
       <HiOutlineArrowNarrowLeft />
     </button>

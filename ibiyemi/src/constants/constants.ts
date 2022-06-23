@@ -1,4 +1,5 @@
 import { ToastOptions } from "react-toastify";
+import dayjs from "dayjs";
 
 export enum LoadStates {
   Loading,
@@ -16,3 +17,44 @@ export const toastConfig: ToastOptions = {
   draggable: true,
   progress: undefined,
 };
+
+export interface PeriodOption {
+  id: string;
+  text: string;
+  startDate: dayjs.Dayjs;
+  granularity: string;
+}
+const now: dayjs.Dayjs = dayjs();
+export const PeriodOptions: PeriodOption[] = [
+  { id: "1", text: "Today", startDate: now, granularity: "hours" },
+  {
+    id: "2",
+    text: "Yesterday",
+    startDate: now.subtract(1, "day"),
+    granularity: "day",
+  },
+  {
+    id: "3",
+    text: "Last 7 Days",
+    startDate: now.subtract(7, "day"),
+    granularity: "day",
+  },
+  {
+    id: "4",
+    text: "This Month",
+    startDate: now.startOf("month"),
+    granularity: "week",
+  },
+  {
+    id: "5",
+    text: "Last Month",
+    startDate: now.subtract(1, "month").startOf("month"),
+    granularity: "week",
+  },
+  {
+    id: "6",
+    text: "This Year",
+    startDate: now.startOf("year"),
+    granularity: "month",
+  },
+];
