@@ -36,6 +36,8 @@ export interface CartItem {
   id?: number;
   product: Product;
   quantity: number;
+  sale?: Sale;
+  sale_price?: number;
 }
 
 export interface Customer {
@@ -70,4 +72,14 @@ export interface BusinessInfo {
   address: string;
   phone_numbers: string;
   receipt_message: string;
+}
+
+export interface Remission {
+  id: string | number;
+  user: User;
+  amount: number;
+  description: string;
+  date: string;
+  approved: boolean;
+  approved_by: User;
 }
