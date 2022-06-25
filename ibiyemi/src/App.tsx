@@ -27,6 +27,7 @@ import ProfileLayout from "./pages/profile/layout";
 import ProfileIndex from "./pages/profile";
 import ChangeUsername from "./pages/profile/change-username";
 import ChangePassword from "./pages/profile/change-password";
+import AddRemission from "./pages/profile/add-remission";
 
 // Manager
 import ManagerLayout from "./pages/manager/layout";
@@ -61,6 +62,7 @@ function App() {
             <Route index element={<ProfileIndex />} />
             <Route path="change-password" element={<ChangePassword />} />
             <Route path="change-username" element={<ChangeUsername />} />
+            <Route path="add-remission" element={<AddRemission />} />
           </Route>
 
           <Route path="manager" element={<ManagerLayout />}></Route>

@@ -1,4 +1,5 @@
 export interface User {
+  id: number;
   username: string;
   type: string;
   last_login?: string;
@@ -16,7 +17,7 @@ export interface Category {
 }
 
 export interface Product {
-  id: number | string;
+  id: number;
   name: string;
   description?: string;
   category?: Category;
@@ -37,7 +38,7 @@ export interface CartItem {
   product: Product;
   quantity: number;
   sale?: Sale;
-  sale_price?: number;
+  sell_price?: number;
 }
 
 export interface Customer {
@@ -75,11 +76,11 @@ export interface BusinessInfo {
 }
 
 export interface Remission {
-  id: string | number;
-  user: User;
+  id?: string | number;
+  user?: User;
   amount: number;
   description: string;
-  date: string;
-  approved: boolean;
-  approved_by: User;
+  date?: string;
+  approved?: boolean;
+  approved_by?: User;
 }

@@ -46,9 +46,9 @@ function Navbar() {
   return (
     <nav className="sticky top-0 z-[4] shadow-sm px-2 md:px-10 bg-colorWhite flex flex-col">
       <div className="h-16 flex flex-row">
-        <div className="flex-grow flex">
+        <Link to="/" className="flex-grow flex">
           <img src={logo} alt="company" className="h-8 my-auto" />
-        </div>
+        </Link>
 
         <div className="hidden md:flex flex-row px-10 gap-3">
           <NavLink link="/">Store</NavLink>

@@ -16,6 +16,7 @@ export function divmod(numerator: number, denumerator: number): number[] {
  * takes a raw date string received from the backend and converts it to a displayable string
  */
 export function formatRawDate(dateString: string): string {
+  if (dateString === "") return "";
   return dayjs(dateString).format("DD/MM/YYYY");
 }
 

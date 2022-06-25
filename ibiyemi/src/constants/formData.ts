@@ -18,3 +18,8 @@ export type ChangePasswordFormData = {
   old_password: string;
   password: string;
 };
+
+export type RemissionFormData = {
+  amount: number | string;
+  description: string;
+};

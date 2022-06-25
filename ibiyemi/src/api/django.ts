@@ -4,8 +4,9 @@ import {
   SignInFormData,
   ChangePasswordFormData,
   ChangeUserNameFormData,
+  RemissionFormData,
 } from "../constants/formData";
-import {} from "./interfaces";
+import { User } from "./interfaces";
 
 export enum RequestStatus {
   Success,
@@ -148,6 +149,55 @@ export class DjangoClient {
   ): Promise<ClientResponse> {
     return await this.axiosInstance
       .post("accounts/update/", formData)
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
+      }));
+  }
+
+  async addRemission(formData: RemissionFormData): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .post("manager/remits/", formData)
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
+      }));
+  }
+
+  async getRemissions(
+    user: User | null = null,
+    startDate: string | null = null
+  ): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .get("manager/remits/", {
+        params: { user: user?.id, start: startDate },
+      })
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
+      }));
+  }
+
+  async getSaleItems(
+    user: User | null = null,
+    startDate: string | null = null
+  ): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .get("store/saleitems/", {
+        params: { user: user?.id, start: startDate },
+      })
       .then((response) => ({
         status: RequestStatus.Success,
         data: response.data,

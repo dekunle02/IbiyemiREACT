@@ -57,4 +57,12 @@ export const PeriodOptions: PeriodOption[] = [
     startDate: now.startOf("year"),
     granularity: "month",
   },
+  {
+    id: "7",
+    text: "Last Year",
+    startDate: now.subtract(1, "year").startOf("year"),
+    granularity: "month",
+  },
 ];
+
+export const ISO_DATE_FORMAT = "YYYY-MM-DD";
