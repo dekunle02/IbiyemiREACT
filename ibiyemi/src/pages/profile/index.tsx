@@ -22,7 +22,6 @@ import {
   PeriodOption,
   ISO_DATE_FORMAT,
   LoadStates,
-  PeriodOptions,
 } from "../../constants/constants";
 import { RequestStatus } from "../../api/django";
 import Spinner from "../../components/Spinner";
@@ -82,7 +81,6 @@ function ProfileIndex() {
     return totalSales.reduce((total, sale) => total + sale.amount_received, 0);
   }, [totalSales]);
 
-  console.log("RENDER");
   return (
     <div className="w-full md:px-14">
       {/* MAIN PROFILE */}

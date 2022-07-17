@@ -1,5 +1,12 @@
 import { ToastOptions } from "react-toastify";
+import {
+  MdDashboard,
+  MdPointOfSale,
+  MdCategory,
+  MdSupervisorAccount,
+} from "react-icons/md";
 import dayjs from "dayjs";
+import React from "react";
 
 export enum LoadStates {
   Loading,
@@ -24,7 +31,9 @@ export interface PeriodOption {
   startDate: dayjs.Dayjs;
   granularity: string;
 }
+
 const now: dayjs.Dayjs = dayjs();
+
 export const PeriodOptions: PeriodOption[] = [
   { id: "1", text: "Today", startDate: now, granularity: "hours" },
   {
@@ -57,12 +66,25 @@ export const PeriodOptions: PeriodOption[] = [
     startDate: now.startOf("year"),
     granularity: "month",
   },
-  {
-    id: "7",
-    text: "Last Year",
-    startDate: now.subtract(1, "year").startOf("year"),
-    granularity: "month",
-  },
+  // {
+  //   id: "7",
+  //   text: "Last Year",
+  //   startDate: now.subtract(1, "year").startOf("year"),
+  //   granularity: "month",
+  // },
 ];
 
 export const ISO_DATE_FORMAT = "YYYY-MM-DD";
+
+export interface ManagerMenuItem {
+  id: string;
+  text: string;
+  icon: React.ReactNode;
+}
+
+export const ManagerMenuItems: ManagerMenuItem[] = [
+  { id: "1", text: "Dashboard", icon: <MdDashboard /> },
+  { id: "2", text: "Sales", icon: <MdPointOfSale /> },
+  { id: "3", text: "Products", icon: <MdCategory /> },
+  { id: "4", text: "Accounts", icon: <MdSupervisorAccount /> },
+];
