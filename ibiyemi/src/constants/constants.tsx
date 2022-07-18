@@ -84,9 +84,14 @@ export interface ManagerMenuItem {
 }
 
 export const ManagerMenuItems: ManagerMenuItem[] = [
-  { id: "1", text: "Dashboard", icon: <MdDashboard />, link: "" },
-  { id: "2", text: "Sales", icon: <MdPointOfSale />, link: "sales" },
-  { id: "3", text: "Products", icon: <MdCategory />, link: "products" },
+  { id: "1", text: "Dashboard", icon: <MdDashboard />, link: "/manager" },
+  { id: "2", text: "Sales", icon: <MdPointOfSale />, link: "/manager/sales" },
+  {
+    id: "3",
+    text: "Products",
+    icon: <MdCategory />,
+    link: "/manager/products",
+  },
   {
     id: "4",
     text: "Accounts",

@@ -26,7 +26,7 @@ function SideNavItem({ menuItem }: SideNavItemI): JSX.Element {
 
 function ManagerSideNav() {
   return (
-    <nav className="w-56 flex flex-col gap-2 my-2">
+    <nav className="w-52 md:flex flex-col gap-2 my-2 hidden ">
       {ManagerMenuItems.map((item) => (
         <SideNavItem key={item.id} menuItem={item} />
       ))}

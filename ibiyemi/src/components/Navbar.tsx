@@ -18,7 +18,13 @@ const variants = {
 
 function NavLink({ link, children, onClick }: NavMenuItem) {
   const resolvedLink = useResolvedPath(link);
-  const match = useMatch({ path: resolvedLink.pathname, end: true });
+  let end = link ? false : true;
+  if (link === "/") {
+    end = true;
+  }
+  let match = useMatch({ path: resolvedLink.pathname, end: end });
+
+  // const match = useMatch({ path: resolvedLink.pathname, end: true });
 
   return (
     <Link
@@ -46,7 +52,7 @@ function Navbar() {
   return (
     <nav className="sticky top-0 z-[4] shadow-sm px-2 md:px-10 bg-colorWhite flex flex-col">
       <div className="h-16 flex flex-row">
-        <Link to="/" className="flex-grow flex">
+        <Link to="" className="flex-grow flex">
           <img src={logo} alt="company" className="h-8 my-auto" />
         </Link>
 
