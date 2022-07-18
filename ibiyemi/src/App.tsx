@@ -31,6 +31,10 @@ import AddRemission from "./pages/profile/add-remission";
 
 // Manager
 import ManagerLayout from "./pages/manager/layout";
+import Dashboard from "./pages/manager/dashboard";
+import Accounts from "./pages/manager/accounts";
+import Products from "./pages/manager/products";
+import Sales from "./pages/manager/sales";
 
 function App() {
   // const user = useAppSelector((state) => state.user);
@@ -65,7 +69,12 @@ function App() {
             <Route path="add-remission" element={<AddRemission />} />
           </Route>
 
-          <Route path="manager" element={<ManagerLayout />}></Route>
+          <Route path="manager" element={<ManagerLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="products" element={<Products />} />
+            <Route path="sales" element={<Sales />} />
+            <Route path="accounts" element={<Accounts />} />
+          </Route>
         </Route>
 
         {/* 404 PAGE */}

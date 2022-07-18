@@ -80,11 +80,17 @@ export interface ManagerMenuItem {
   id: string;
   text: string;
   icon: React.ReactNode;
+  link: string;
 }
 
 export const ManagerMenuItems: ManagerMenuItem[] = [
-  { id: "1", text: "Dashboard", icon: <MdDashboard /> },
-  { id: "2", text: "Sales", icon: <MdPointOfSale /> },
-  { id: "3", text: "Products", icon: <MdCategory /> },
-  { id: "4", text: "Accounts", icon: <MdSupervisorAccount /> },
+  { id: "1", text: "Dashboard", icon: <MdDashboard />, link: "" },
+  { id: "2", text: "Sales", icon: <MdPointOfSale />, link: "sales" },
+  { id: "3", text: "Products", icon: <MdCategory />, link: "products" },
+  {
+    id: "4",
+    text: "Accounts",
+    icon: <MdSupervisorAccount />,
+    link: "accounts",
+  },
 ];
