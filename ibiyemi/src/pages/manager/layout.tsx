@@ -16,12 +16,12 @@ function ManagerLayout() {
         ))}
       </nav>
 
-      <div className="flex flex-row w-full h-full">
+      <div className="flex flex-row w-full h-full md:mt-3">
         <div className="h-full">
           <ManagerSideNav />
         </div>
 
-        <div className="m-2">
+        <div className="m-2 w-full">
           <Outlet />
         </div>
       </div>

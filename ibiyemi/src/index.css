@@ -45,6 +45,10 @@
   .popup-card {
     @apply rounded-2xl p-5 lg:px-10 bg-colorWhite w-[90vw] max-w-lg relative;
   }
+
+  .card {
+    @apply rounded p-2 bg-colorWhite drop-shadow-md;
+  }
 }
 
 /* 
