@@ -196,7 +196,7 @@ export class DjangoClient {
   ): Promise<ClientResponse> {
     return await this.axiosInstance
       .get("store/saleitems/", {
-        params: { user: user?.id, start: startDate },
+        params: { user: user?.id, start_date: startDate },
       })
       .then((response) => ({
         status: RequestStatus.Success,
@@ -209,6 +209,26 @@ export class DjangoClient {
   }
 
   // PROFILE END
+
+  // SALES
+  async getSales(
+    startDate: string | null,
+    limit: string | null
+  ): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .get("store/sales/", {
+        params: { start_date: startDate },
+      })
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
+      }));
+  }
+  // SALES END
 }
 
 const getDjango = (token?: Token): DjangoClient => new DjangoClient(token);

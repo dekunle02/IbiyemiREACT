@@ -14,8 +14,8 @@ function SideNavItem({ menuItem }: SideNavItemI): JSX.Element {
     <Link
       key={menuItem.id}
       className={`${
-        match ? "bg-colorPrimary text-colorWhite" : "hover:bg-colorPrimary/20"
-      } mx-2 p-3 icon-button rounded-xl`}
+        match ? "bg-colorPrimary/30" : "hover:bg-colorPrimary/10"
+      } text-colorPrimaryDark text-lg  mx-2 p-3 icon-button rounded-xl`}
       to={menuItem.link}
     >
       {menuItem.icon}

@@ -47,7 +47,7 @@
   }
 
   .card {
-    @apply rounded p-2 bg-colorWhite drop-shadow-md;
+    @apply rounded-xl p-2 bg-colorWhite drop-shadow-md;
   }
 }
 
