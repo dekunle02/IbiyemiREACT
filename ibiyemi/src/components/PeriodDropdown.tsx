@@ -15,7 +15,8 @@ function PeriodDropdown({
 
   useEffect(() => {
     onPeriodOptionSelected(initialPeriod);
-  }, [initialPeriod, onPeriodOptionSelected]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialPeriod]);
 
   const handleSelect = (event: React.ChangeEvent) => {
     const target = event.target as HTMLSelectElement;
