@@ -185,7 +185,7 @@ function ProfileIndex() {
       {/* REMISSION TABLE END */}
 
       {/* PRODUCT TABLE START  */}
-      <div className="m-3 md:m-5 p-3 rounded-xl border">
+      <div className="m-3 md:m-5 p-3 rounded-xl border overflow-auto">
         <h1 className="text-2xl mb-2">📕 Products Sold</h1>
 
         <table className="w-full">

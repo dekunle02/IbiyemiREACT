@@ -35,7 +35,7 @@ function Dashboard() {
       <SummaryCards period={selectedPeriod} />
       <br />
       <div className="grid grid-rows-2  md:grid-cols-[2fr_1fr] md:grid-rows-1">
-        <SalesChart />
+        <SalesChart period={selectedPeriod} />
         <SalesPie />
       </div>
       <br />

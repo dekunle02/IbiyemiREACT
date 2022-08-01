@@ -35,7 +35,7 @@ export interface PeriodOption {
 const now: dayjs.Dayjs = dayjs();
 
 export const PeriodOptions: PeriodOption[] = [
-  { id: "1", text: "Today", startDate: now, granularity: "hours" },
+  { id: "1", text: "Today", startDate: now, granularity: "hour" },
   {
     id: "2",
     text: "Yesterday",

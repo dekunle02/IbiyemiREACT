@@ -69,6 +69,11 @@ export interface Sale {
   user: User;
 }
 
+export interface SaleAggregateObject {
+  dates: string[];
+  sales: Sale[][];
+}
+
 export interface BusinessInfo {
   address: string;
   phone_numbers: string;

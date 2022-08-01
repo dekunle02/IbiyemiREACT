@@ -228,6 +228,25 @@ export class DjangoClient {
         data: error.response.data,
       }));
   }
+
+  async getSalesAggregate(
+    startDate: string,
+    granularity: string
+  ): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .get("store/sales/sales-aggregate/", {
+        params: { start_date: startDate, granularity: granularity },
+      })
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
+      }));
+  }
+
   // SALES END
 }
 

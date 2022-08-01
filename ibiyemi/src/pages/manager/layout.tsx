@@ -7,7 +7,7 @@ function ManagerLayout() {
   return (
     <div className="flex flex-col w-full h-full">
       {/* BREADCRUMB */}
-      <nav className="my-1 md:hidden block">
+      <nav className="mt-3 mb-2 md:hidden block">
         {ManagerMenuItems.map((item, index) => (
           <span key={item.id}>
             <Breadcrumb key={item.id} menuItem={item} />
