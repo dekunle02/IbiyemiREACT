@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PeriodDropdown from "../../components/PeriodDropdown";
 import {
   PeriodOption,
@@ -7,13 +7,31 @@ import {
   PeriodOptions,
 } from "../../constants/constants";
 import { MdDashboard } from "react-icons/md";
+import { DjangoClient, RequestStatus } from "../../api/django";
+import { useApi } from "../../context/AuthContext";
 import SummaryCards from "./components/summary-cards";
 import SalesChart from "./components/sales-chart";
 import SalesPie from "./components/sales-pie";
 import TopSellingProducts from "./components/top-selling";
+import { Sale } from "../../api/interfaces";
 
 function Dashboard() {
+  const django: DjangoClient = useApi();
   const [selectedPeriod, selectPeriod] = useState(PeriodOptions[0]);
+  const [saleArr, setSaleArr] = useState<Sale[]>([]);
+  const [loadState, setLoadState] = useState(LoadStates.Loading);
+
+  useEffect(() => {
+    const startDate = selectedPeriod.startDate.format(ISO_DATE_FORMAT);
+    django.getSales(startDate, null).then((response) => {
+      if (response.status === RequestStatus.Success) {
+        setSaleArr(response.data);
+        setLoadState(LoadStates.Success);
+      } else {
+        setLoadState(LoadStates.Failure);
+      }
+    });
+  }, [django, selectedPeriod]);
 
   const handlePeriodOptionSelected = (period: PeriodOption) => {
     selectPeriod(period);
@@ -32,16 +50,20 @@ function Dashboard() {
         />
       </div>
       <br />
-      <SummaryCards period={selectedPeriod} />
+      <SummaryCards
+        saleArr={saleArr}
+        componentLoadState={loadState}
+        period={selectedPeriod}
+      />
       <br />
       <br />
       <div className="grid grid-rows-2  md:grid-cols-[2fr_1fr] md:grid-rows-1 items-center">
         <SalesChart period={selectedPeriod} />
-        <SalesPie period={selectedPeriod} />
+        <SalesPie saleArr={saleArr} componentLoadState={loadState} />
       </div>
       <br />
       <div>
-        <TopSellingProducts />
+        <TopSellingProducts saleArr={saleArr} componentLoadState={loadState} />
       </div>
       <br />
       <br />

@@ -1,4 +1,26 @@
-function TopSellingProducts() {
+import { useState, useEffect, useMemo } from "react";
+import { useApi } from "../../../context/AuthContext";
+import { Sale } from "../../../api/interfaces";
+import Chart from "react-apexcharts";
+import { ApexOptions } from "apexcharts";
+import {
+  LoadStates,
+  PeriodOption,
+  ISO_DATE_FORMAT,
+} from "../../../constants/constants";
+import Spinner from "../../../components/Spinner";
+import LoadFailedMessage from "../../../components/LoadFailedMessage";
+import { DjangoClient, RequestStatus } from "../../../api/django";
+import { capitalizeSentence } from "../../../helpers/format-helpers";
+import EmptyListMessage from "../../../components/EmptyListMessage";
+
+interface TopSellingProps {
+  componentLoadState: LoadStates;
+  saleArr: Sale[];
+}
+
+function TopSellingProducts({ componentLoadState, saleArr }: TopSellingProps) {
+  console.log("topsellingproducts =", saleArr);
   return (
     <div className="border rounded-2xl p-3">
       <h3 className="text-xl">Top Selling Products</h3>

@@ -35,8 +35,6 @@ function SalesChart({ period }: SalesChartProps) {
     });
   }, [django, period]);
 
-  console.log("****", saleAggregate);
-
   const salesTotalArr: number[] | undefined = useMemo(() => {
     return saleAggregate?.sales.map((saleArr) => saleArr.length);
   }, [saleAggregate]);

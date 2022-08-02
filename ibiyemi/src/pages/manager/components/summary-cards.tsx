@@ -12,26 +12,16 @@ import Spinner from "../../../components/Spinner";
 import LoadFailedMessage from "../../../components/LoadFailedMessage";
 
 interface SummaryCardProps {
+  componentLoadState: LoadStates;
+  saleArr: Sale[];
   period: PeriodOption;
 }
 
-function SummaryCards({ period }: SummaryCardProps) {
-  const django: DjangoClient = useApi();
-  const [saleArr, setSaleArr] = useState<Sale[]>([]);
-  const [loadState, setLoadState] = useState(LoadStates.Loading);
-
-  useEffect(() => {
-    const startDate = period.startDate.format(ISO_DATE_FORMAT);
-    django.getSales(startDate, null).then((response) => {
-      if (response.status === RequestStatus.Success) {
-        setSaleArr(response.data);
-        setLoadState(LoadStates.Success);
-      } else {
-        setLoadState(LoadStates.Failure);
-      }
-    });
-  }, [django, period]);
-
+function SummaryCards({
+  componentLoadState,
+  saleArr,
+  period,
+}: SummaryCardProps) {
   // period.startDate.format(ISO_DATE_FORMAT)
 
   const totalProfits: number = useMemo(() => {
@@ -57,9 +47,10 @@ function SummaryCards({ period }: SummaryCardProps) {
       <div className="rounded-xl p-2 flex flex-col w-full bg-pink-100 text-pink-900">
         <h3 className="font-semibold text-xl text-pink-900/80">Profit</h3>
         <span className="text-4xl text-center py-4">
-          {loadState === LoadStates.Loading && <Spinner />}
-          {loadState === LoadStates.Success && formatMoney(totalProfits)}
-          {loadState === LoadStates.Failure && <LoadFailedMessage />}
+          {componentLoadState === LoadStates.Loading && <Spinner />}
+          {componentLoadState === LoadStates.Success &&
+            formatMoney(totalProfits)}
+          {componentLoadState === LoadStates.Failure && <LoadFailedMessage />}
         </span>
         <span className="text-right font-light">{period.text}</span>
       </div>

@@ -11,33 +11,15 @@ import {
 import Spinner from "../../../components/Spinner";
 import LoadFailedMessage from "../../../components/LoadFailedMessage";
 import { DjangoClient, RequestStatus } from "../../../api/django";
-import { SaleAggregateObject } from "../../../api/interfaces";
 import { capitalizeSentence } from "../../../helpers/format-helpers";
 import EmptyListMessage from "../../../components/EmptyListMessage";
 
 interface SalesPieProps {
-  period: PeriodOption;
+  componentLoadState: LoadStates;
+  saleArr: Sale[];
 }
 
-function SalesPie({ period }: SalesPieProps) {
-  const django: DjangoClient = useApi();
-  const [saleArr, setSaleArr] = useState<Sale[]>([]);
-  const [loadState, setLoadState] = useState(LoadStates.Loading);
-
-  useEffect(() => {
-    const startDate = period.startDate.format(ISO_DATE_FORMAT);
-    django.getSales(startDate, null).then((response) => {
-      if (response.status === RequestStatus.Success) {
-        setSaleArr(response.data);
-        response.data.length > 0
-          ? setLoadState(LoadStates.Success)
-          : setLoadState(LoadStates.Empty);
-      } else {
-        setLoadState(LoadStates.Failure);
-      }
-    });
-  }, [django, period]);
-
+function SalesPie({ componentLoadState, saleArr }: SalesPieProps) {
   function reducePaymentMethod(arr: Sale[]) {
     const paymentObj: any = {};
     arr.forEach((sale) => {
@@ -93,12 +75,12 @@ function SalesPie({ period }: SalesPieProps) {
   return (
     <div>
       <h3>Payment Options</h3>
-      {loadState === LoadStates.Loading && <Spinner />}
-      {loadState === LoadStates.Failure && <LoadFailedMessage />}
-      {loadState === LoadStates.Empty && (
+      {componentLoadState === LoadStates.Loading && <Spinner />}
+      {componentLoadState === LoadStates.Failure && <LoadFailedMessage />}
+      {saleArr.length === 0 && (
         <EmptyListMessage message="No Sales in this Period" />
       )}
-      {loadState === LoadStates.Success && (
+      {componentLoadState === LoadStates.Success && (
         <Chart
           options={chartOptions}
           series={chartOptions.series}
