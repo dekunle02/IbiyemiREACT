@@ -34,14 +34,18 @@ function Dashboard() {
       <br />
       <SummaryCards period={selectedPeriod} />
       <br />
-      <div className="grid grid-rows-2  md:grid-cols-[2fr_1fr] md:grid-rows-1">
+      <br />
+      <div className="grid grid-rows-2  md:grid-cols-[2fr_1fr] md:grid-rows-1 items-center">
         <SalesChart period={selectedPeriod} />
-        <SalesPie />
+        <SalesPie period={selectedPeriod} />
       </div>
       <br />
       <div>
         <TopSellingProducts />
       </div>
+      <br />
+      <br />
+      <br />
     </div>
   );
 }

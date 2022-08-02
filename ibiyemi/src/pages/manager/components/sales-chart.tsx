@@ -6,12 +6,12 @@ import {
   ISO_DATE_FORMAT,
 } from "../../../constants/constants";
 import { DjangoClient, RequestStatus } from "../../../api/django";
-import { Sale, SaleAggregateObject } from "../../../api/interfaces";
-import { formatMoney } from "../../../helpers/format-helpers";
+import { SaleAggregateObject } from "../../../api/interfaces";
 import Spinner from "../../../components/Spinner";
 import LoadFailedMessage from "../../../components/LoadFailedMessage";
 import Chart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
+import EmptyListMessage from "../../../components/EmptyListMessage";
 
 interface SalesChartProps {
   period: PeriodOption;
@@ -34,6 +34,8 @@ function SalesChart({ period }: SalesChartProps) {
       }
     });
   }, [django, period]);
+
+  console.log("****", saleAggregate);
 
   const salesTotalArr: number[] | undefined = useMemo(() => {
     return saleAggregate?.sales.map((saleArr) => saleArr.length);
@@ -70,17 +72,20 @@ function SalesChart({ period }: SalesChartProps) {
 
   return (
     <div>
+      <h3 className="text-xl">Sales Chart</h3>
       {loadState === LoadStates.Loading && <Spinner />}
       {loadState === LoadStates.Failure && <LoadFailedMessage />}
+      {loadState === LoadStates.Empty && (
+        <EmptyListMessage message="No Sales in this Period" />
+      )}
       {loadState === LoadStates.Success && (
         <Chart
           options={chartOptions}
           series={chartSeries}
           type="line"
-          height={350}
+          height={320}
         />
       )}
-      Sales Chart
     </div>
   );
 }
