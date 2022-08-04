@@ -68,13 +68,15 @@ function ProfileIndex() {
   }, [remissionArr]);
 
   const totalSales = useMemo(() => {
-    const saleSet = new Set<Sale>();
+    const saleArr: Sale[] = [];
+    const saleIdSet: Set<number | undefined> = new Set<number>();
     cartItemArr.forEach((item) => {
-      if (item.sale) {
-        saleSet.add(item.sale);
+      if (item.sale && !saleIdSet.has(item.sale.id)) {
+        saleArr.push(item.sale);
+        saleIdSet.add(item.sale.id);
       }
     });
-    return Array.from(saleSet);
+    return saleArr;
   }, [cartItemArr]);
 
   const totalAmountReceived = useMemo(() => {
