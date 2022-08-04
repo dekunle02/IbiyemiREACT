@@ -78,10 +78,13 @@ function ProfileIndex() {
   }, [cartItemArr]);
 
   const totalAmountReceived = useMemo(() => {
-    return totalSales.reduce((total, sale) => total + sale.sell_price, 0);
-  }, [totalSales]);
+    return cartItemArr.reduce(
+      (total, item) => total + (item.sell_price ?? 0),
+      0
+    );
+  }, [cartItemArr]);
 
-  console.log("Total Sales ===> ", totalSales);
+  console.log("Total SaleItems received ===> ", cartItemArr);
 
   return (
     <div className="w-full md:px-14">
