@@ -42,8 +42,8 @@ function TopSellingProducts({ period }: TopSellingProps) {
     });
   }, [django, period]);
 
-  console.log("most sold products =>", mostSoldProductArr);
-  console.log("most sold products =>", mostSoldProductArr[0].product);
+  // console.log("most sold products =>", mostSoldProductArr);
+  // console.log("most sold products =>", mostSoldProductArr[0].product);
 
   return (
     <div className="border rounded-2xl p-3">
