@@ -121,12 +121,11 @@ export function setProductQuantityInCartItemArr(
   };
 }
 
-// calculates the total selling price for a given cartItem
 export function calculateCartItemSellingPrice(cartItem: CartItem): number {
   return calculateProductBulKSellPrice(cartItem.product, cartItem.quantity);
 }
 
-function calculateProductBulKSellPrice(
+export function calculateProductBulKSellPrice(
   product: Product,
   quantity: number
 ): number {

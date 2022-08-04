@@ -86,8 +86,6 @@ function ProfileIndex() {
     );
   }, [cartItemArr]);
 
-  console.log("Total SaleItems received ===> ", cartItemArr);
-
   return (
     <div className="w-full md:px-14">
       {/* MAIN PROFILE */}

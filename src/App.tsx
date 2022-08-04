@@ -33,8 +33,14 @@ import AddRemission from "./pages/profile/add-remission";
 import ManagerLayout from "./pages/manager/layout";
 import Dashboard from "./pages/manager/dashboard";
 import Accounts from "./pages/manager/accounts";
-import Products from "./pages/manager/products";
 import Sales from "./pages/manager/sales";
+
+// Products
+import ProductLayout from "./pages/manager/products/layout";
+import ProductIndex from "./pages/manager/products/index";
+import ProductDetail from "./pages/manager/products/detail";
+import CategoryLayout from "./pages/manager/category/layout";
+import CategoryDetail from "./pages/manager/category/detail";
 
 function App() {
   // const user = useAppSelector((state) => state.user);
@@ -71,7 +77,15 @@ function App() {
 
           <Route path="manager" element={<ManagerLayout />}>
             <Route index element={<Dashboard />} />
-            <Route path="products" element={<Products />} />
+
+            <Route path="products" element={<ProductLayout />}>
+              <Route index element={<ProductIndex />} />
+              <Route path=":id" element={<ProductDetail />} />
+            </Route>
+            <Route path="categories" element={<CategoryLayout />}>
+              <Route path=":id" element={<CategoryDetail />} />
+            </Route>
+
             <Route path="sales" element={<Sales />} />
             <Route path="accounts" element={<Accounts />} />
           </Route>
