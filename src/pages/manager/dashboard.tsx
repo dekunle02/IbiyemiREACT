@@ -63,7 +63,7 @@ function Dashboard() {
       </div>
       <br />
       <div>
-        <TopSellingProducts saleArr={saleArr} componentLoadState={loadState} />
+        <TopSellingProducts period={selectedPeriod} />
       </div>
       <br />
       <br />

@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useApi } from "../../../context/AuthContext";
-import { Sale } from "../../../api/interfaces";
+import { Sale, Product } from "../../../api/interfaces";
 import Chart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
 import {
@@ -15,12 +15,36 @@ import { capitalizeSentence } from "../../../helpers/format-helpers";
 import EmptyListMessage from "../../../components/EmptyListMessage";
 
 interface TopSellingProps {
-  componentLoadState: LoadStates;
-  saleArr: Sale[];
+  period: PeriodOption;
 }
 
-function TopSellingProducts({ componentLoadState, saleArr }: TopSellingProps) {
-  console.log("topsellingproducts =", saleArr);
+type TopSellingProductObj = {
+  product: Product;
+  quantity_sold: number;
+};
+
+function TopSellingProducts({ period }: TopSellingProps) {
+  const django = useApi();
+  const [mostSoldProductArr, setMostSoldProductArr] = useState<
+    TopSellingProductObj[]
+  >([]);
+  const [loadState, setLoadState] = useState(LoadStates.Loading);
+
+  useEffect(() => {
+    const startDate = period.startDate.format(ISO_DATE_FORMAT);
+    django.getMostSoldProducts(startDate, 10).then((response) => {
+      if (response.status === RequestStatus.Success) {
+        setMostSoldProductArr(response.data);
+        setLoadState(LoadStates.Success);
+      } else {
+        setLoadState(LoadStates.Failure);
+      }
+    });
+  }, [django, period]);
+
+  console.log("most sold products =>", mostSoldProductArr);
+  console.log("most sold products =>", mostSoldProductArr[0].product);
+
   return (
     <div className="border rounded-2xl p-3">
       <h3 className="text-xl">Top Selling Products</h3>
@@ -37,6 +61,7 @@ function TopSellingProducts({ componentLoadState, saleArr }: TopSellingProps) {
           </tr>
         </thead>
         <tbody>
+          {}
           <tr>
             <td>1.</td>
             <td>Macmillan Book</td>

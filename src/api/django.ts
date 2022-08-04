@@ -92,6 +92,24 @@ export class DjangoClient {
         data: { message: "Sth went wrong.." },
       }));
   }
+
+  async getMostSoldProducts(
+    startDate: string | null,
+    limit: number | null
+  ): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .get("inventory/products/most-sold", {
+        params: { start_date: startDate, limit: limit },
+      })
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: { message: "Sth went wrong.." },
+      }));
+  }
   // MANAGER END
 
   // STORE FRONT
@@ -213,11 +231,11 @@ export class DjangoClient {
   // SALES
   async getSales(
     startDate: string | null,
-    limit: string | null
+    limit: number | null
   ): Promise<ClientResponse> {
     return await this.axiosInstance
       .get("store/sales/", {
-        params: { start_date: startDate },
+        params: { start_date: startDate, limit: limit },
       })
       .then((response) => ({
         status: RequestStatus.Success,

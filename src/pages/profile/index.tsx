@@ -68,20 +68,25 @@ function ProfileIndex() {
   }, [remissionArr]);
 
   const totalSales = useMemo(() => {
-    const saleSet = new Set<Sale>();
+    const saleArr: Sale[] = [];
+    const saleIdSet: Set<number | undefined> = new Set<number>();
     cartItemArr.forEach((item) => {
-      if (item.sale) {
-        saleSet.add(item.sale);
+      if (item.sale && !saleIdSet.has(item.sale.id)) {
+        saleArr.push(item.sale);
+        saleIdSet.add(item.sale.id);
       }
     });
-    return Array.from(saleSet);
+    return saleArr;
   }, [cartItemArr]);
 
   const totalAmountReceived = useMemo(() => {
-    return totalSales.reduce((total, sale) => total + sale.sell_price, 0);
-  }, [totalSales]);
+    return cartItemArr.reduce(
+      (total, item) => total + (item.sell_price ?? 0),
+      0
+    );
+  }, [cartItemArr]);
 
-  console.log("Total Sales ===> ", totalSales);
+  console.log("Total SaleItems received ===> ", cartItemArr);
 
   return (
     <div className="w-full md:px-14">
