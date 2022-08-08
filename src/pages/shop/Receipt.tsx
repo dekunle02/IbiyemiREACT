@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useApi } from "../../context/AuthContext";
+import { useLocation } from "react-router-dom";
+import { useAppSelector } from "../../redux/hooks";
 
 import { HiPrinter } from "react-icons/hi";
 import { LoadStates } from "../../constants/constants";
@@ -15,15 +17,24 @@ import {
 } from "../../helpers/cart-helpers";
 import { formatRawDate, formatMoney } from "../../helpers/format-helpers";
 
+type ReceiptPageProps = {
+  sale: Sale | null;
+};
+
 function ReceiptPage() {
   const { id } = useParams();
   const django = useApi();
+  const location = useLocation();
   const [receipt, setReceipt] = useState<Sale | null>(null);
   const [businessInfo, setBusinessInfo] = useState<BusinessInfo | null>(null);
   const [loadState, setLoadState] = useState(LoadStates.Loading);
+  const stateBusinessInfo = useAppSelector((state) => state.user.businessInfo);
+  const locationState = location.state as ReceiptPageProps;
+  const sale: Sale | null = locationState.sale;
+  // const sale = null;
 
   useEffect(() => {
-    if (id) {
+    if (id && !sale) {
       Promise.all([django.getSale(id), django.getBusinessInfo()]).then(
         (responseArr) => {
           const statusArr = responseArr.filter(
@@ -41,7 +52,13 @@ function ReceiptPage() {
         }
       );
     }
-  }, [django, id]);
+    if (sale) {
+      console.log("**Sale preloaded =>", sale);
+      setReceipt(sale);
+      setBusinessInfo(stateBusinessInfo);
+      setLoadState(LoadStates.Success);
+    }
+  }, [django, id, sale, stateBusinessInfo]);
 
   return (
     <div className="fixed top-0 right-0 z-20 w-screen h-screen bg-white">

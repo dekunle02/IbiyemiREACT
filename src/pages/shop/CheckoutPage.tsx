@@ -9,7 +9,7 @@ import { customerSchema } from "../../constants/yupSchemas";
 import { toastConfig } from "../../constants/constants";
 import { toast } from "react-toastify";
 import { FormInput } from "../../components/FormInput";
-
+import { Sale } from "../../api/interfaces";
 import {
   calculateCartItemSellingPrice,
   calculateCartSellingPrice,
@@ -62,8 +62,10 @@ function CheckoutPage() {
       if (response.status === RequestStatus.Success) {
         toast.dismiss(toastId);
         dispatch(clearCartItemArr());
-        window.open("/receipt/" + response.data.id, "_blank");
-        navigate("/");
+        const sale: Sale = response.data;
+        navigate(`/receipt/${sale.id}`, { state: { sale: sale } });
+        // window.open("/receipt/" + response.data.id, "_blank");
+        // navigate("/");
       } else {
         toast.update(toastId, {
           render: "Error selling items in cart...",

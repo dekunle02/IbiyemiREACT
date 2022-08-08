@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useLocation, Navigate } from "react-router-dom";
-import { useAppSelector } from "../redux/hooks";
+import { useAppSelector, useAppDispatch } from "../redux/hooks";
+import { setBusinessInfo } from "../redux/userSlice";
 
 import getDjango, { DjangoClient, RequestStatus } from "../api/django";
 import { LoadStates } from "../constants/constants";
 import LoadingPage from "../pages/LoadingPage";
+import { BusinessInfo } from "../api/interfaces";
 
 type AuthProviderProps = {
   children: React.ReactNode;
@@ -17,21 +19,35 @@ export function useApi() {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const location = useLocation();
+  const dispatch = useAppDispatch();
   const token = useAppSelector((state) => state.user.token);
   const [django, setDjango] = useState<DjangoClient>(getDjango());
   const [authState, setAuthState] = useState<LoadStates>(LoadStates.Loading);
 
   useEffect(() => {
     const djangoClient: DjangoClient = getDjango();
-    djangoClient.validateToken(token).then((response) => {
-      if (response.status === RequestStatus.Success) {
+    Promise.all([
+      djangoClient.validateToken(token),
+      djangoClient.getBusinessInfo(),
+    ]).then((responseArr) => {
+      if (responseArr.some((resp) => resp.status === RequestStatus.Failure)) {
+        setAuthState(LoadStates.Failure);
+      } else {
         setDjango(getDjango(token));
         setAuthState(LoadStates.Success);
-      } else {
-        setAuthState(LoadStates.Failure);
+        const businessInfo: BusinessInfo = responseArr[1].data;
+        dispatch(setBusinessInfo(businessInfo));
       }
     });
-  }, [token]);
+    // djangoClient.validateToken(token).then((response) => {
+    //   if (response.status === RequestStatus.Success) {
+    //     setDjango(getDjango(token));
+    //     setAuthState(LoadStates.Success);
+    //   } else {
+    //     setAuthState(LoadStates.Failure);
+    //   }
+    // });
+  }, [token, dispatch]);
 
   return (
     <AuthContext.Provider value={django}>
