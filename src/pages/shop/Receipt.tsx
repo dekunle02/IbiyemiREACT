@@ -31,7 +31,6 @@ function ReceiptPage() {
   const stateBusinessInfo = useAppSelector((state) => state.user.businessInfo);
   const locationState = location.state as ReceiptPageProps;
   const sale: Sale | null = locationState.sale;
-  // const sale = null;
 
   useEffect(() => {
     if (id && !sale) {
@@ -53,7 +52,7 @@ function ReceiptPage() {
       );
     }
     if (sale) {
-      console.log("**Sale preloaded =>", sale);
+      console.log("**Sale preloaded**");
       setReceipt(sale);
       setBusinessInfo(stateBusinessInfo);
       setLoadState(LoadStates.Success);
@@ -100,7 +99,7 @@ function ReceiptPage() {
 
               <tbody>
                 {receipt.sale_items.map((cartItem) => (
-                  <tr>
+                  <tr key={cartItem.id}>
                     <td>{cartItem.product.name}</td>
                     <td>{cartItem.quantity}</td>
                     <td>
