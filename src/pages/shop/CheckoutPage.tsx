@@ -40,6 +40,7 @@ function CheckoutPage() {
   const [realAmountReceived, setRealAmountReceived] = useState<number>(0);
   const [amountReceived, setAmountReceived] = useState<string>("0");
   const [paymentMethod, setPaymentMethod] = useState<string>("cash");
+  const [hasCheckedOut, setHasCheckedOut] = useState<boolean>(false);
   const [change, setChange] = useState<string>("₦0");
 
   useEffect(() => {
@@ -53,6 +54,7 @@ function CheckoutPage() {
 
   //   CUSTOMER FORM SUBMIT CO-OPTED TO SUBMIT ALL PAGE DATA
   const handleSubmit = (values: CustomerFormData) => {
+    setHasCheckedOut(true);
     const paymentData: PaymentData = {
       amount_received: realAmountReceived,
       payment_method: paymentMethod,
@@ -98,7 +100,7 @@ function CheckoutPage() {
   };
 
   const canCheckOut = (): boolean => {
-    return realAmountReceived >= cartSellingPrice;
+    return realAmountReceived >= cartSellingPrice && !hasCheckedOut;
   };
 
   const handleSellButtonClick = () => {

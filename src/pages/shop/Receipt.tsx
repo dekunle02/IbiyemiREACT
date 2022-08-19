@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useApi } from "../../context/AuthContext";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks";
 
-import { HiPrinter } from "react-icons/hi";
+import { HiPrinter, HiHome } from "react-icons/hi";
 import { LoadStates } from "../../constants/constants";
 import Spinner from "../../components/Spinner";
 import LoadFailedMessage from "../../components/LoadFailedMessage";
@@ -65,13 +65,21 @@ function ReceiptPage() {
       {loadState === LoadStates.Failure && <LoadFailedMessage />}
       {loadState === LoadStates.Success && receipt && businessInfo && (
         <>
+          <Link
+            to="/"
+            className="button bg-pink-500 hover:bg-pink-600 icon-button print:hidden m-5 w-fit"
+          >
+            <HiHome />
+            Back Home
+          </Link>
           <button
             onClick={() => window.print()}
-            className="button icon-button print:hidden m-5"
+            className="button icon-button print:hidden m-5 w-fit"
           >
             <HiPrinter />
             Click To Print
           </button>
+
           <div className="text-sm">
             <span>Ibiyemi Bookshop</span>
             <br />
