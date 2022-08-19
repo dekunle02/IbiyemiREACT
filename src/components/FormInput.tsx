@@ -67,7 +67,7 @@ function FormInput({
       {/* ERROR MESSAGE */}
       <div
         className={`text-colorRed flex flex-row items-center transition-all duration-100 
-      ${showError ? "scale-100 my-2 " : "scale-0"}`}
+      ${showError ? "scale-100 my-2 " : "hidden"}`}
       >
         <IoAlertCircleSharp className="text-lg" />
         <p className="text-sm text-right">&nbsp;&nbsp;{errorMessage}</p>
