@@ -80,7 +80,7 @@ function ProductsIndex() {
   );
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col md:mx-3">
       {/* Top heading */}
       <div className="flex flex-row flex-wrap gap-2">
         <MdCategory className="font-semibold text-3xl text-colorBlack/80" />
@@ -112,11 +112,11 @@ function ProductsIndex() {
           Print
         </Link>
       </div>
-
+      <br />
       {/* summary cards */}
-      <div className="my-3 flex flex-row gap-3 flex-wrap md:flex-nowrap text-black/80 ">
+      <div className="my-3 flex flex-row gap-3 flex-wrap md:flex-nowrap text-black/80">
         {/* Product Count Card */}
-        <div className="rounded-xl p-3 flex flex-col w-full border">
+        <div className="rounded-xl p-3 flex flex-col w-full bg-slate-200">
           <h3 className="font-semibold text-xl text-black/50">
             Products In Stock
           </h3>
@@ -132,7 +132,7 @@ function ProductsIndex() {
         </div>
 
         {/* cost card */}
-        <div className="rounded-xl p-3 flex flex-col w-full border">
+        <div className="rounded-xl p-3 flex flex-col w-full bg-lime-100">
           <h3 className="font-semibold text-xl text-black/50">Total Cost</h3>
           <span className="text-3xl text-center py-4">
             {productLoadState === LoadStates.Loading && <Spinner />}
@@ -146,7 +146,7 @@ function ProductsIndex() {
         </div>
 
         {/* sell card */}
-        <div className="rounded-xl p-3 flex flex-col w-full border">
+        <div className="rounded-xl p-3 flex flex-col w-full bg-orange-100">
           <h3 className="font-semibold text-xl text-black/50">
             Total Selling Price
           </h3>
@@ -162,7 +162,7 @@ function ProductsIndex() {
         </div>
 
         {/* earnings card */}
-        <div className="rounded-xl p-3 flex flex-col w-full border">
+        <div className="rounded-xl p-3 flex flex-col w-full bg-fuchsia-100">
           <h3 className="font-semibold text-xl text-black/50">
             Potential Earnings
           </h3>
@@ -176,8 +176,9 @@ function ProductsIndex() {
         </div>
       </div>
 
+      <br />
       {/* Product list */}
-      <div className="m-3 flex flex-row gap-2">
+      <div className="m-3 flex flex-row gap-3">
         <FormInput
           id="query"
           name="query"
@@ -195,7 +196,7 @@ function ProductsIndex() {
           </button>
         </FormInput>
 
-        <Link to="new" className="text-lg button icon-button px-2">
+        <Link to="new" className="text-lg button icon-button px-4">
           <MdAdd />
           Add Product
         </Link>
@@ -206,7 +207,7 @@ function ProductsIndex() {
       {productLoadState === LoadStates.Loading && <Spinner />}
       {productLoadState === LoadStates.Failure && <LoadFailedMessage />}
       {productLoadState === LoadStates.Success && (
-        <div className="text-center overflow-y-auto max-h-96">
+        <div className="text-center overflow-y-auto max-h-[40rem]">
           <table className="w-full">
             <thead className="border-b-2">
               <tr className="my-2">

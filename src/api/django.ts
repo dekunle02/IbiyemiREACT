@@ -5,6 +5,7 @@ import {
   ChangePasswordFormData,
   ChangeUserNameFormData,
   RemissionFormData,
+  CategoryFormData,
 } from "../constants/formData";
 import { User } from "./interfaces";
 
@@ -113,9 +114,11 @@ export class DjangoClient {
   // MANAGER END
 
   // STORE FRONT
-  async getProducts(): Promise<ClientResponse> {
+  async getProducts(category: number | null = null): Promise<ClientResponse> {
+    const filter_params: any = {};
+    if (category) filter_params["category"] = category;
     return await this.axiosInstance
-      .get("inventory/products")
+      .get("inventory/products", { params: filter_params })
       .then((response) => ({
         status: RequestStatus.Success,
         data: response.data as Product[],
@@ -227,6 +230,74 @@ export class DjangoClient {
   }
 
   // PROFILE END
+
+  async getCategories(): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .get("inventory/categories/")
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
+      }));
+  }
+
+  async addCategory(formData: CategoryFormData): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .post("inventory/categories/", formData)
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
+      }));
+  }
+
+  async getCategory(id: number): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .get(`inventory/categories/${id}`)
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
+      }));
+  }
+
+  async editCategory(
+    id: number,
+    formData: CategoryFormData
+  ): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .patch(`inventory/categories/${id}/`, formData)
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
+      }));
+  }
+
+  async deleteCategory(id: number): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .delete(`inventory/categories/${id}`)
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
+      }));
+  }
 
   // SALES
   async getSales(

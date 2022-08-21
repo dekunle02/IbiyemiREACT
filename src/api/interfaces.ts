@@ -11,9 +11,13 @@ export interface Token {
 }
 
 export interface Category {
-  id: number | string;
+  id: number;
   name: string;
   description?: string;
+  count?: number;
+  quantity?: number;
+  cost_price?: number;
+  sell_price?: number;
 }
 
 export interface Product {
