@@ -3,7 +3,7 @@
 // import { useAppSelector, useAppDispatch } from "./redux/hooks";
 // import { signIn, signOut } from "./redux/userSlice";
 
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -38,9 +38,12 @@ import Sales from "./pages/manager/sales";
 // Products
 import ProductLayout from "./pages/manager/products/layout";
 import ProductIndex from "./pages/manager/products/index";
+import ProductOutOfStock from "./pages/manager/products/products-out-stock";
 import ProductDetail from "./pages/manager/products/detail";
-import CategoryLayout from "./pages/manager/category/layout";
-import CategoryDetail from "./pages/manager/category/detail";
+import CategoryList from "./pages/manager/products/category-list";
+import CategoryDetail from "./pages/manager/products/category-detail";
+import CategoryNew from "./pages/manager/products/category-new";
+import CategoryEdit from "./pages/manager/products/category-edit";
 
 function App() {
   // const user = useAppSelector((state) => state.user);
@@ -80,10 +83,14 @@ function App() {
 
             <Route path="products" element={<ProductLayout />}>
               <Route index element={<ProductIndex />} />
+              <Route path="categories" element={<Outlet />}>
+                <Route index element={<CategoryList />} />
+                <Route path="new" element={<CategoryNew />} />
+                <Route path="edit/:id" element={<CategoryEdit />} />
+                <Route path=":id" element={<CategoryDetail />} />
+              </Route>
+              <Route path="out" element={<ProductOutOfStock />} />
               <Route path=":id" element={<ProductDetail />} />
-            </Route>
-            <Route path="categories" element={<CategoryLayout />}>
-              <Route path=":id" element={<CategoryDetail />} />
             </Route>
 
             <Route path="sales" element={<Sales />} />

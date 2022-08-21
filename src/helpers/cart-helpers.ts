@@ -171,6 +171,52 @@ export function calculateProductBulKSellPrice(
   return quotient * price + calculateProductBulKSellPrice(product, remainder);
 }
 
+export function calculateProductBulKCostPrice(
+  product: Product,
+  quantity: number
+): number {
+  if (quantity <= 1) {
+    return product.unit_cost_price * quantity;
+  }
+  const fields: string[] = [
+    "pack_cost_price",
+    "dozen_cost_price",
+    "unit_cost_price",
+  ];
+  const field_quantities = {
+    unit_cost_price: 1,
+    dozen_cost_price: 6,
+    pack_cost_price: product.pack_quantity
+      ? product.pack_quantity / 2
+      : product.unit_cost_price,
+  };
+  const field_prices = {
+    unit_cost_price: product.unit_cost_price,
+    dozen_cost_price: product.dozen_cost_price
+      ? product.dozen_cost_price / 2
+      : product.unit_cost_price,
+    pack_cost_price: product.pack_cost_price
+      ? product.pack_cost_price / 2
+      : product.unit_cost_price,
+  };
+  let denumerator = 1;
+  let price = product.unit_cost_price;
+
+  for (let i = 0; i < fields.length; i++) {
+    const field: string = fields[i];
+    if (
+      product[field as keyof Product]! > 0 &&
+      quantity >= field_quantities[field as keyof typeof field_quantities]!
+    ) {
+      denumerator = field_quantities[field as keyof typeof field_quantities];
+      price = field_prices[field as keyof typeof field_prices]!;
+      break;
+    }
+  }
+  const [quotient, remainder] = divmod(quantity, denumerator);
+  return quotient * price + calculateProductBulKCostPrice(product, remainder);
+}
+
 // calculates the total selling price for the cart in total
 export function calculateCartSellingPrice(arr: CartItem[]): number {
   const initialValue = 0;

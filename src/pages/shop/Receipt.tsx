@@ -52,7 +52,6 @@ function ReceiptPage() {
       );
     }
     if (sale) {
-      console.log("**Sale preloaded**");
       setReceipt(sale);
       setBusinessInfo(stateBusinessInfo);
       setLoadState(LoadStates.Success);

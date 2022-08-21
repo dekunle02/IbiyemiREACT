@@ -37,3 +37,9 @@ export const customerSchema = Yup.object().shape({
   address: Yup.string(),
   phone_number: Yup.string(),
 });
+
+// MANAGER
+export const categorySchema = Yup.object().shape({
+  name: Yup.string().required("Please include the name of this category"),
+  description: Yup.string(),
+});
