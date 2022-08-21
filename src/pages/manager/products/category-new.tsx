@@ -8,7 +8,7 @@ import { CategoryFormData } from "../../../constants/formData";
 import { FormInput } from "../../../components/FormInput";
 import { DjangoClient, RequestStatus } from "../../../api/django";
 import BackButton from "../../../components/BackButton";
-import { MdEdit } from "react-icons/md";
+import { MdAdd } from "react-icons/md";
 
 function CategoryNew() {
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ function CategoryNew() {
     <div>
       <div className="flex flex-row flex-wrap gap-2 relative items-center">
         <BackButton relative />
-        <MdEdit className="font-semibold text-3xl text-colorBlack/80" />
+        <MdAdd className="font-semibold text-3xl text-colorBlack/80" />
         <h1 className="font-semibold text-3xl text-colorBlack/80 flex-grow">
           Add a Category
         </h1>

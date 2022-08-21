@@ -38,6 +38,7 @@ import Sales from "./pages/manager/sales";
 // Products
 import ProductLayout from "./pages/manager/products/layout";
 import ProductIndex from "./pages/manager/products/index";
+import ProductOutOfStock from "./pages/manager/products/products-out-stock";
 import ProductDetail from "./pages/manager/products/detail";
 import CategoryList from "./pages/manager/products/category-list";
 import CategoryDetail from "./pages/manager/products/category-detail";
@@ -88,6 +89,7 @@ function App() {
                 <Route path="edit/:id" element={<CategoryEdit />} />
                 <Route path=":id" element={<CategoryDetail />} />
               </Route>
+              <Route path="out" element={<ProductOutOfStock />} />
               <Route path=":id" element={<ProductDetail />} />
             </Route>
 

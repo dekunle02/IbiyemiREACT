@@ -299,6 +299,19 @@ export class DjangoClient {
       }));
   }
 
+  async getOutOfStockProducts(): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .get("inventory/products/out")
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data as Product[],
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: { message: "Token Invalid" },
+      }));
+  }
+
   // SALES
   async getSales(
     startDate: string | null,

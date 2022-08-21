@@ -19,7 +19,6 @@ function ProductsIndex() {
   const django: DjangoClient = useApi();
   const [query, setQuery] = useState<string>("");
   const [productArr, setProductArr] = useState<Product[]>([]);
-  // const [queriedProductArr, setQueriedProductArr] = useState<Product[]>([]);
   const [productLoadState, setProductLoadState] = useState<LoadStates>(
     LoadStates.Loading
   );
@@ -79,6 +78,14 @@ function ProductsIndex() {
     product.name.toLowerCase().includes(query.trim().toLowerCase())
   );
 
+  const handlePrintClick = () => {
+    let printUrl: string = "http://127.0.0.1:8000/inventory/print/";
+    if (process.env.REACT_APP_DEV_MODE === "False") {
+      printUrl = "https://ibiyemi-s-5ldap.ondigitalocean.app/inventory/print/";
+    }
+    window.open(printUrl, "_blank");
+  };
+
   return (
     <div className="flex flex-col md:mx-3">
       {/* Top heading */}
@@ -104,13 +111,13 @@ function ProductsIndex() {
           View Products Going Out of Stock
         </Link>
 
-        <Link
-          to="print"
+        <button
+          onClick={handlePrintClick}
           className="icon-button text-lg border rounded-2xl p-1 px-3 text-colorPrimary border-colorPrimary hover:bg-colorBlack/5"
         >
           <MdPrint />
           Print
-        </Link>
+        </button>
       </div>
       <br />
       {/* summary cards */}
