@@ -82,9 +82,13 @@ function Navbar() {
         <NavLink link="/" onClick={toggleMobileMenu}>
           Store
         </NavLink>
-        <NavLink link="/manager" onClick={toggleMobileMenu}>
-          Manager
-        </NavLink>
+
+        {user.type === "OWNER" && (
+          <NavLink link="/manager" onClick={toggleMobileMenu}>
+            Manager
+          </NavLink>
+        )}
+
         <NavLink link="/profile" onClick={toggleMobileMenu}>
           Profile
         </NavLink>
