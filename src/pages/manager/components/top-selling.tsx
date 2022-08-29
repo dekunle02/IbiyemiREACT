@@ -76,7 +76,7 @@ function TopSellingProducts({ period }: TopSellingProps) {
                   <Link to={`products/${product.id}`}>{product.name} </Link>
                 </td>
                 <td className="text-left py-4 text-blue-600">
-                  <Link to={`categories/${product.category?.id}`}>
+                  <Link to={`products/categories/${product.category?.id}`}>
                     {product.category?.name}
                   </Link>
                 </td>
