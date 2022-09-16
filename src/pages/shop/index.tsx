@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useApi } from "../../context/AuthContext";
 import { setCartItemArr } from "../../redux/cartSlice";
+import { setActiveCartIdx, setCartTabState } from "../../redux/cartTabSlice";
 
 import { toast } from "react-toastify";
 import { toastConfig } from "../../constants/constants";
@@ -24,9 +25,16 @@ function ShopIndex() {
   const [query, setQuery] = useState<string>("");
   const [productArr, setProductArr] = useState<Product[]>([]);
   const [displayedProductArr, setDisplayedProductArr] = useState<Product[]>([]);
-  const cartItemArr: CartItem[] = useAppSelector(
-    (state) => state.cart.cartItemArr
+
+  const activeTabIdx: number = useAppSelector(
+    (state) => state.cartTab.activeCartIdx
   );
+  const cartTab2DArr: CartItem[][] = useAppSelector(
+    (state) => state.cartTab.cartTab2DArr
+  );
+
+  const cartItemArr: CartItem[] = cartTab2DArr[activeTabIdx];
+
   const [loadState, setLoadState] = useState<LoadStates>(LoadStates.Loading);
 
   useEffect(() => {
@@ -66,7 +74,10 @@ function ShopIndex() {
       cartItemArr
     );
     if (result.status === HelperStatus.Success) {
-      dispatch(setCartItemArr(result.data));
+      const newCartTab2DArr = [...cartTab2DArr];
+      newCartTab2DArr[activeTabIdx] = result.data;
+      dispatch(setCartTabState(newCartTab2DArr));
+      // dispatch(setCartItemArr(result.data));
     } else {
       toast.warn(result.message, toastConfig);
     }
