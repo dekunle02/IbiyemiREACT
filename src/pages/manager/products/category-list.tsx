@@ -62,7 +62,7 @@ function CategoryList() {
               <th>#</th>
               <th className="text-left py-2">Name</th>
               <th className="text-left">Products Count</th>
-              <th>Product Qty</th>
+              <th className="text-left">Product Qty</th>
               <th className="text-left">Cost Price</th>
               <th className="text-left">Sell Price</th>
             </tr>
