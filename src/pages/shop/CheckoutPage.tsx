@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector, useAppDispatch } from "../../redux/hooks";
-import { clearCartItemArr } from "../../redux/cartSlice";
 import { useApi } from "../../context/AuthContext";
-import BackButton from "../../components/BackButton";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+import { setActiveCartIdx, setCartTabState } from "../../redux/cartTabSlice";
+
 import { Formik } from "formik";
 import { customerSchema } from "../../constants/yupSchemas";
 import { toastConfig } from "../../constants/constants";
@@ -20,6 +20,7 @@ import { CartItem, PaymentData } from "../../api/interfaces";
 import { formatMoney, commaSeparateNumber } from "../../helpers/format-helpers";
 import { CustomerFormData } from "../../constants/formData";
 import { RequestStatus } from "../../api/django";
+import BackButton from "../../components/BackButton";
 
 const PaymentMethodRadios = [
   { value: "cash", text: "Cash" },
@@ -33,9 +34,14 @@ function CheckoutPage() {
   const customerForm = useRef(null);
   const django = useApi();
   const navigate = useNavigate();
-  const cartItemArr: CartItem[] = useAppSelector(
-    (state) => state.cart.cartItemArr
+
+  const cartTab2DArr: CartItem[][] = useAppSelector(
+    (state) => state.cartTab.cartTab2DArr
   );
+  const activeTabIdx: number = useAppSelector(
+    (state) => state.cartTab.activeCartIdx
+  );
+  const cartItemArr = cartTab2DArr[activeTabIdx];
   const cartSellingPrice = calculateCartSellingPrice(cartItemArr);
   const [realAmountReceived, setRealAmountReceived] = useState<number>(0);
   const [amountReceived, setAmountReceived] = useState<string>("0");
@@ -63,7 +69,15 @@ function CheckoutPage() {
     django.makeSale(values, cartItemArr, paymentData).then((response) => {
       if (response.status === RequestStatus.Success) {
         toast.dismiss(toastId);
-        dispatch(clearCartItemArr());
+
+        let newCartTab2DArr = [...cartTab2DArr];
+        newCartTab2DArr.splice(activeTabIdx, 1);
+        if (newCartTab2DArr.length === 0) {
+          newCartTab2DArr = [[]];
+        }
+        dispatch(setCartTabState(newCartTab2DArr));
+        dispatch(setActiveCartIdx(newCartTab2DArr.length - 1));
+
         const sale: Sale = response.data;
         navigate(`/receipt/${sale.id}`, { state: { sale: sale } });
         // window.open("/receipt/" + response.data.id, "_blank");
