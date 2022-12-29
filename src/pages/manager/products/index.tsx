@@ -100,7 +100,7 @@ function ProductsIndex() {
           className="icon-button text-lg border rounded-2xl p-1 px-3 border-black hover:bg-colorBlack/5"
         >
           <MdCallMade />
-          View Product Categories
+          Categories
         </Link>
 
         <Link
@@ -229,12 +229,12 @@ function ProductsIndex() {
 
             <tbody>
               {queriedProductArr.map((product, index) => (
-                <tr key={product.id + Math.random()}>
-                  <td>{index + 1}</td>
-                  <td className="text-left py-4 text-blue-600 ">
+                <tr key={product.id + Math.random()} className="border-b">
+                  <td>{index + 1}.</td>
+                  <td className="text-left py-4 link">
                     <Link to={`products/${product.id}`}>{product.name} </Link>
                   </td>
-                  <td className="text-left py-4 text-blue-600">
+                  <td className="text-left py-4 link">
                     <Link to={`categories/${product.category?.id}`}>
                       {product.category?.name}
                     </Link>
