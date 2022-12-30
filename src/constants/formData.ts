@@ -36,8 +36,10 @@ export type CreditorFormData = {
 };
 
 export type ExpenseFormData = {
+  name?: string;
   amount?: number | string;
   description?: string;
+  due_date?: string;
 };
 
 export type BusinessInfoFormData = {

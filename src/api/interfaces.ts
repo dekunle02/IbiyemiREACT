@@ -103,7 +103,8 @@ export interface Creditor {
 
 export interface Expense {
   id: number;
-  user: User;
+  name: string;
   amount: number;
   description: string;
+  due_date: string;
 }
