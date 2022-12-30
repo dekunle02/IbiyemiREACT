@@ -9,6 +9,7 @@ import {
   CreditorFormData,
   ExpenseFormData,
   BusinessInfoFormData,
+  UserFormData,
 } from "../constants/formData";
 import { User } from "./interfaces";
 
@@ -148,6 +149,45 @@ export class DjangoClient {
       .catch((error) => ({
         status: RequestStatus.Failure,
         data: { message: "Token Invalid" },
+      }));
+  }
+
+  async getSalePersons() {
+    return this.axiosInstance
+      .get("accounts/salespersons/")
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
+      }));
+  }
+
+  async addSalesperson(formData: UserFormData): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .post("accounts/salespersons/", formData)
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
+      }));
+  }
+
+  async deleteSalesPerson(id: number) {
+    return await this.axiosInstance
+      .delete(`accounts/salespersons/${id}`)
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
       }));
   }
 

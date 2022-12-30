@@ -96,9 +96,9 @@ export const ManagerMenuItems: ManagerMenuItem[] = [
   },
   {
     id: "4",
-    text: "Accounts",
+    text: "Employees",
     icon: <MdSupervisorAccount />,
-    link: "accounts",
+    link: "employees",
   },
   {
     id: "5",
