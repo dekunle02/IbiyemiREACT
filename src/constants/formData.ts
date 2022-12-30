@@ -1,3 +1,8 @@
+export type UserFormData = {
+  username: string;
+  password: string;
+};
+
 export type SignInFormData = {
   username?: string;
   password?: string;

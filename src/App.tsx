@@ -32,7 +32,7 @@ import AddRemission from "./pages/profile/add-remission";
 // Manager
 import ManagerLayout from "./pages/manager/layout";
 import Dashboard from "./pages/manager/dashboard";
-import Accounts from "./pages/manager/accounts";
+import Employees from "./pages/manager/employees";
 import Sales from "./pages/manager/sales";
 import Shop from "./pages/manager/shop";
 
@@ -96,7 +96,7 @@ function App() {
 
             <Route path="sales" element={<Sales />} />
             <Route path="myshop" element={<Shop />} />
-            <Route path="accounts" element={<Accounts />} />
+            <Route path="employees" element={<Employees />} />
           </Route>
         </Route>
 
