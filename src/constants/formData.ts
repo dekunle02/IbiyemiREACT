@@ -25,6 +25,23 @@ export type RemissionFormData = {
 };
 
 export type CategoryFormData = {
-  name: string;
-  description: string;
+  name?: string;
+  description?: string;
+};
+
+export type CreditorFormData = {
+  name?: string;
+  phone_number?: string;
+  amount?: number | string;
+};
+
+export type ExpenseFormData = {
+  amount?: number | string;
+  description?: string;
+};
+
+export type BusinessInfoFormData = {
+  address?: string;
+  phone_numbers?: string;
+  receipt_message?: string;
 };

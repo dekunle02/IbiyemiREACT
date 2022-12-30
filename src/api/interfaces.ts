@@ -93,3 +93,17 @@ export interface Remission {
   approved?: boolean;
   approved_by?: User;
 }
+
+export interface Creditor {
+  id: number;
+  name: string;
+  phone_number?: string;
+  amount: number;
+}
+
+export interface Expense {
+  id: number;
+  user: User;
+  amount: number;
+  description: string;
+}

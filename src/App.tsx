@@ -34,6 +34,7 @@ import ManagerLayout from "./pages/manager/layout";
 import Dashboard from "./pages/manager/dashboard";
 import Accounts from "./pages/manager/accounts";
 import Sales from "./pages/manager/sales";
+import Shop from "./pages/manager/shop";
 
 // Products
 import ProductLayout from "./pages/manager/products/layout";
@@ -94,6 +95,7 @@ function App() {
             </Route>
 
             <Route path="sales" element={<Sales />} />
+            <Route path="myshop" element={<Shop />} />
             <Route path="accounts" element={<Accounts />} />
           </Route>
         </Route>
