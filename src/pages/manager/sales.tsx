@@ -133,8 +133,6 @@ function SimpleCard(props: { mainText: string; subText: string }) {
 }
 
 function ReceiptBox({ receiptArr }: { receiptArr: Sale[] }) {
-  function handleQueryChange(event: React.FormEvent) {}
-
   return (
     <div className="flex flex-col p-2 rounded-lg border">
       <h1 className="text-xl">Receipts</h1>
