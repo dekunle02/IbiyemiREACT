@@ -1,6 +1,9 @@
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import React from "react";
-import { dayJsToDateString } from "../helpers/format-helpers";
+import {
+  dateStringToDayjs,
+  dayJsToDateString,
+} from "../helpers/format-helpers";
 
 interface DateRangePickerProps {
   dateRange: DateRange;
@@ -17,25 +20,27 @@ export default function DateRangePicker(props: DateRangePickerProps) {
 
   function handleChange(event: React.ChangeEvent) {
     const element = event.target as HTMLInputElement;
+    const newDate = element.value;
     if (element.id === "startDate") {
-      onChange({ startDate: dateRange.startDate, endDate: dateRange.endDate });
+      onChange({ startDate: dayjs(newDate), endDate: dateRange.endDate });
     } else {
-      onChange({ startDate: dateRange.startDate, endDate: dateRange.endDate });
+      onChange({ startDate: dateRange.startDate, endDate: dayjs(newDate) });
     }
   }
 
-  console.log(dayJsToDateString(dateRange.startDate));
   return (
     <div className="flex flex-row items-center">
       <input
         id="startDate"
+        className="border-colorPrimary rounded p-1"
         type="date"
         value={dayJsToDateString(dateRange.startDate)}
         onChange={handleChange}
       />
-      <span>-</span>
+      <span className="mx-1">-</span>
       <input
         id="endDate"
+        className="border-colorPrimary rounded p-1"
         type="date"
         value={dayJsToDateString(dateRange.endDate)}
         onChange={handleChange}
