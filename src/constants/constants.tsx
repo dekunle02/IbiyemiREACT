@@ -4,6 +4,7 @@ import {
   MdPointOfSale,
   MdCategory,
   MdSupervisorAccount,
+  MdAddBusiness,
 } from "react-icons/md";
 import dayjs from "dayjs";
 import React from "react";
@@ -86,6 +87,7 @@ export interface ManagerMenuItem {
 export const ManagerMenuItems: ManagerMenuItem[] = [
   { id: "1", text: "Dashboard", icon: <MdDashboard />, link: "/manager" },
   { id: "2", text: "Sales", icon: <MdPointOfSale />, link: "/manager/sales" },
+
   {
     id: "3",
     text: "Products",
@@ -97,5 +99,11 @@ export const ManagerMenuItems: ManagerMenuItem[] = [
     text: "Accounts",
     icon: <MdSupervisorAccount />,
     link: "accounts",
+  },
+  {
+    id: "5",
+    text: "My Shop",
+    icon: <MdAddBusiness />,
+    link: "/manager/myshop",
   },
 ];

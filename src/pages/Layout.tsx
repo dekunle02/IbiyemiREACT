@@ -5,16 +5,16 @@ import Navbar from "../components/Navbar";
 
 function Layout() {
   return (
-    <PopupProvider>
-      <AuthProvider>
+    <AuthProvider>
+      <PopupProvider>
         <div className="w-screen h-screen flex flex-col">
           <Navbar />
           <div className="flex flex-grow">
             <Outlet />
           </div>
         </div>
-      </AuthProvider>
-    </PopupProvider>
+      </PopupProvider>
+    </AuthProvider>
   );
 }
 

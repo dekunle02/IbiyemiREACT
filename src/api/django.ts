@@ -6,6 +6,9 @@ import {
   ChangeUserNameFormData,
   RemissionFormData,
   CategoryFormData,
+  CreditorFormData,
+  ExpenseFormData,
+  BusinessInfoFormData,
 } from "../constants/formData";
 import { User } from "./interfaces";
 
@@ -84,6 +87,7 @@ export class DjangoClient {
   // AUTH END
 
   // MANAGER START
+
   async getBusinessInfo(): Promise<ClientResponse> {
     return await this.axiosInstance
       .get("manager/businessinfos/1")
@@ -94,6 +98,21 @@ export class DjangoClient {
       .catch((error) => ({
         status: RequestStatus.Failure,
         data: { message: "Sth went wrong.." },
+      }));
+  }
+
+  async editBusinessInfo(
+    formData: BusinessInfoFormData
+  ): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .patch(`manager/businessinfos/1/`, formData)
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
       }));
   }
 
@@ -129,6 +148,142 @@ export class DjangoClient {
       .catch((error) => ({
         status: RequestStatus.Failure,
         data: { message: "Token Invalid" },
+      }));
+  }
+
+  async getCreditors(): Promise<ClientResponse> {
+    return this.axiosInstance
+      .get("manager/creditors/")
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
+      }));
+  }
+
+  async addCreditor(formData: CreditorFormData): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .post("manager/creditors/", formData)
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
+      }));
+  }
+
+  async getCreditor(id: number): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .get(`manager/creditors/${id}`)
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
+      }));
+  }
+
+  async editCreditor(
+    id: number,
+    formData: CreditorFormData
+  ): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .patch(`manager/creditors/${id}/`, formData)
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
+      }));
+  }
+
+  async deleteCreditor(id: number): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .delete(`manager/creditors/${id}`)
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
+      }));
+  }
+
+  async getExpenses(): Promise<ClientResponse> {
+    return this.axiosInstance
+      .get("manager/expenses/")
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
+      }));
+  }
+
+  async addExpense(formData: ExpenseFormData): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .post("manager/expenses/", formData)
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
+      }));
+  }
+
+  async getExpense(id: number): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .get(`manager/expenses/${id}`)
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
+      }));
+  }
+
+  async editExpense(
+    id: number,
+    formData: ExpenseFormData
+  ): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .patch(`manager/expenses/${id}/`, formData)
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
+      }));
+  }
+
+  async deleteExpense(id: number): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .delete(`manager/expenses/${id}`)
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
       }));
   }
 

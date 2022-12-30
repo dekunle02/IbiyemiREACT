@@ -24,6 +24,10 @@
     @apply hover:underline text-colorBlack/80;
   }
 
+  .label {
+    @apply ml-1 font-semibold text-colorBlack/80;
+  }
+
   .success-button {
     @apply bg-colorGreen text-colorWhite rounded-xl
          px-5 py-2 active:bg-colorGreenDark hover:bg-colorGreenDark;
