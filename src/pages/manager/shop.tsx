@@ -15,6 +15,8 @@ import { usePopup } from "../../context/PopupContext";
 import SimpleDialog from "../../components/SimpleDialog";
 import PopupCloseButton from "../../components/PopupCloseButton";
 import dayjs from "dayjs";
+import Spinner from "../../components/Spinner";
+import LoadFailedMessage from "../../components/LoadFailedMessage";
 
 export default function ShopPage() {
   const django = useApi();
@@ -116,221 +118,231 @@ export default function ShopPage() {
         My Shop
       </h1>
 
-      <div className="flex flex-col my-2 p-1 lg:px-5 border rounded">
-        <h5 className="my-2 text-xl">Receipt Information</h5>
-        {businessInfo && (
-          <div className="flex flex-col">
-            <p className="label">Address: </p>
-            <EditableText
-              id="address"
-              text={businessInfo.address}
-              onEditSaved={handleReceiptInfoEditSaved}
-              inputType="textarea"
-            />
-            <br />
-            <p className="label">Phone Numbers</p>
-            <EditableText
-              id="phone_numbers"
-              text={businessInfo.phone_numbers}
-              onEditSaved={handleReceiptInfoEditSaved}
-              inputType="text"
-            />
-            <br />
-            <p className="label">Receipt Message</p>
-            <EditableText
-              id="receipt_message"
-              text="Thanks for shopping with us"
-              onEditSaved={handleReceiptInfoEditSaved}
-              inputType="text"
-            />
+      {loadState === LoadStates.Loading && <Spinner />}
+      {loadState === LoadStates.Failure && <LoadFailedMessage />}
+      {loadState === LoadStates.Success && (
+        <>
+          <div className="flex flex-col my-2 p-1 lg:px-5 border rounded">
+            <h5 className="my-2 text-xl">Receipt Information</h5>
+            {businessInfo && (
+              <div className="flex flex-col">
+                <p className="label">Address: </p>
+                <EditableText
+                  id="address"
+                  text={businessInfo.address}
+                  onEditSaved={handleReceiptInfoEditSaved}
+                  inputType="textarea"
+                />
+                <br />
+                <p className="label">Phone Numbers</p>
+                <EditableText
+                  id="phone_numbers"
+                  text={businessInfo.phone_numbers}
+                  onEditSaved={handleReceiptInfoEditSaved}
+                  inputType="text"
+                />
+                <br />
+                <p className="label">Receipt Message</p>
+                <EditableText
+                  id="receipt_message"
+                  text="Thanks for shopping with us"
+                  onEditSaved={handleReceiptInfoEditSaved}
+                  inputType="text"
+                />
+              </div>
+            )}
           </div>
-        )}
-      </div>
 
-      <br />
-      {/* Creditors/Customers*/}
-      <div className="flex flex-col my-2 p-1 lg:px-5 border rounded max-h-60 overflow-auto">
-        <div className="flex flex-row justify-between items-centers">
-          <h5 className="my-2 text-xl">Creditor/Customers</h5>
-          <button
-            className="button icon-button px-2 py-1"
-            onClick={() => {
-              popup?.show(<AddCreditor />);
-            }}
-          >
-            <MdAdd />
-            Add
-          </button>
-        </div>
+          <br />
+          {/* Creditors/Customers*/}
+          <div className="flex flex-col my-2 p-1 lg:px-5 border rounded max-h-60 overflow-auto">
+            <div className="flex flex-row justify-between items-centers">
+              <h5 className="my-2 text-xl">Creditor/Customers</h5>
+              <button
+                className="button icon-button px-2 py-1"
+                onClick={() => {
+                  popup?.show(<AddCreditor />);
+                }}
+              >
+                <MdAdd />
+                Add
+              </button>
+            </div>
 
-        <table className="w-full">
-          <thead className="border-b-2">
-            <tr className="my-2 text-left">
-              <th>#</th>
-              <th className="">Name</th>
-              <th className="">Amount</th>
-              <th>Phone number</th>
-              <th className="">Action</th>
-            </tr>
-          </thead>
+            <table className="w-full">
+              <thead className="border-b-2">
+                <tr className="my-2 text-left">
+                  <th>#</th>
+                  <th className="">Name</th>
+                  <th className="">Amount</th>
+                  <th>Phone number</th>
+                  <th className="">Action</th>
+                </tr>
+              </thead>
 
-          <tbody>
-            {creditorArr.map((creditor, index) => (
-              <tr key={creditor.id} className="border-b">
-                <td>{index + 1}.</td>
-                <td className="text-left py-4">
-                  <EditableText
-                    id="name"
-                    text={creditor.name}
-                    inputType="text"
-                    onEditSaved={(id, value) => {
-                      handleCreditorEditSaved(creditor.id, "name", value);
-                    }}
-                  />
-                </td>
-                <td className="text-left py-4">
-                  <EditableText
-                    id="amount"
-                    text={creditor.amount?.toString() ?? "0"}
-                    inputType="number"
-                    onEditSaved={(id, value) => {
-                      handleCreditorEditSaved(creditor.id, "amount", value);
-                    }}
-                  />
-                </td>
-                <td>
-                  <EditableText
-                    id="phone_number"
-                    text={creditor.phone_number ?? "None"}
-                    inputType="text"
-                    onEditSaved={(id, value) => {
-                      handleCreditorEditSaved(
-                        creditor.id,
-                        "phone_number",
-                        value
-                      );
-                    }}
-                  />
-                </td>
-                <td className="text-left">
-                  <button
-                    className="text-button"
-                    onClick={() => {
-                      popup?.show(
-                        <SimpleDialog
-                          title="Confirm Delete"
-                          body="Are you sure you want to delete this Customer?"
-                          positiveAction={() => {
-                            handleCreditorDelete(creditor.id);
-                          }}
-                        />
-                      );
-                    }}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+              <tbody>
+                {creditorArr.map((creditor, index) => (
+                  <tr key={creditor.id} className="border-b">
+                    <td>{index + 1}.</td>
+                    <td className="text-left py-4">
+                      <EditableText
+                        id="name"
+                        text={creditor.name}
+                        inputType="text"
+                        onEditSaved={(id, value) => {
+                          handleCreditorEditSaved(creditor.id, "name", value);
+                        }}
+                      />
+                    </td>
+                    <td className="text-left py-4">
+                      <EditableText
+                        id="amount"
+                        text={creditor.amount?.toString() ?? "0"}
+                        inputType="number"
+                        onEditSaved={(id, value) => {
+                          handleCreditorEditSaved(creditor.id, "amount", value);
+                        }}
+                      />
+                    </td>
+                    <td>
+                      <EditableText
+                        id="phone_number"
+                        text={creditor.phone_number ?? "None"}
+                        inputType="text"
+                        onEditSaved={(id, value) => {
+                          handleCreditorEditSaved(
+                            creditor.id,
+                            "phone_number",
+                            value
+                          );
+                        }}
+                      />
+                    </td>
+                    <td className="text-left">
+                      <button
+                        className="text-button"
+                        onClick={() => {
+                          popup?.show(
+                            <SimpleDialog
+                              title="Confirm Delete"
+                              body="Are you sure you want to delete this Customer?"
+                              positiveAction={() => {
+                                handleCreditorDelete(creditor.id);
+                              }}
+                            />
+                          );
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-      {/* Expenses */}
-      <br />
-      <div className="flex flex-col my-2 p-1 lg:px-5 border rounded max-h-60 overflow-auto">
-        <div className="flex flex-row justify-between items-centers">
-          <h5 className="my-2 text-xl">Expenses</h5>
-          <button
-            className="button icon-button px-2 py-1"
-            onClick={() => {
-              popup?.show(<AddExpense />);
-            }}
-          >
-            <MdAdd />
-            Add
-          </button>
-        </div>
+          {/* Expenses */}
+          <br />
+          <div className="flex flex-col my-2 p-1 lg:px-5 border rounded max-h-60 overflow-auto">
+            <div className="flex flex-row justify-between items-centers">
+              <h5 className="my-2 text-xl">Expenses</h5>
+              <button
+                className="button icon-button px-2 py-1"
+                onClick={() => {
+                  popup?.show(<AddExpense />);
+                }}
+              >
+                <MdAdd />
+                Add
+              </button>
+            </div>
 
-        <table className="w-full">
-          <thead className="border-b-2">
-            <tr className="my-2 text-left">
-              <th>#</th>
-              <th className="">Name</th>
-              <th className="">Description</th>
-              <th>Amount</th>
-              <th>Due Date</th>
-              <th className="">Action</th>
-            </tr>
-          </thead>
+            <table className="w-full">
+              <thead className="border-b-2">
+                <tr className="my-2 text-left">
+                  <th>#</th>
+                  <th className="">Name</th>
+                  <th className="">Description</th>
+                  <th>Amount</th>
+                  <th>Due Date</th>
+                  <th className="">Action</th>
+                </tr>
+              </thead>
 
-          <tbody>
-            {expenseArr.map((expense, index) => (
-              <tr key={expense.id} className="border-b">
-                <td>{index + 1}.</td>
-                <td className="text-left py-4">
-                  <EditableText
-                    id="name"
-                    text={expense.name}
-                    inputType="text"
-                    onEditSaved={(id, value) => {
-                      handleExpenseEditSaved(expense.id, "name", value);
-                    }}
-                  />
-                </td>
-                <td className="text-left py-4">
-                  <EditableText
-                    id="description"
-                    text={expense.description}
-                    inputType="text"
-                    onEditSaved={(id, value) => {
-                      handleExpenseEditSaved(expense.id, "description", value);
-                    }}
-                  />
-                </td>
-                <td className="text-left py-4">
-                  <EditableText
-                    id="amount"
-                    text={expense.amount?.toString() ?? "0"}
-                    inputType="number"
-                    onEditSaved={(id, value) => {
-                      handleCreditorEditSaved(expense.id, "amount", value);
-                    }}
-                  />
-                </td>
-                <td>
-                  <EditableText
-                    id="due_date"
-                    text={expense.due_date ?? "None"}
-                    inputType="text"
-                    onEditSaved={(id, value) => {
-                      handleExpenseEditSaved(expense.id, "due_date", value);
-                    }}
-                  />
-                </td>
-                <td className="text-left">
-                  <button
-                    className="text-button"
-                    onClick={() => {
-                      popup?.show(
-                        <SimpleDialog
-                          title="Confirm Delete"
-                          body="Are you sure you want to delete this Expense?"
-                          positiveAction={() => {
-                            handleExpenseDelete(expense.id);
-                          }}
-                        />
-                      );
-                    }}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+              <tbody>
+                {expenseArr.map((expense, index) => (
+                  <tr key={expense.id} className="border-b">
+                    <td>{index + 1}.</td>
+                    <td className="text-left py-4">
+                      <EditableText
+                        id="name"
+                        text={expense.name}
+                        inputType="text"
+                        onEditSaved={(id, value) => {
+                          handleExpenseEditSaved(expense.id, "name", value);
+                        }}
+                      />
+                    </td>
+                    <td className="text-left py-4">
+                      <EditableText
+                        id="description"
+                        text={expense.description}
+                        inputType="text"
+                        onEditSaved={(id, value) => {
+                          handleExpenseEditSaved(
+                            expense.id,
+                            "description",
+                            value
+                          );
+                        }}
+                      />
+                    </td>
+                    <td className="text-left py-4">
+                      <EditableText
+                        id="amount"
+                        text={expense.amount?.toString() ?? "0"}
+                        inputType="number"
+                        onEditSaved={(id, value) => {
+                          handleCreditorEditSaved(expense.id, "amount", value);
+                        }}
+                      />
+                    </td>
+                    <td>
+                      <EditableText
+                        id="due_date"
+                        text={expense.due_date ?? "None"}
+                        inputType="text"
+                        onEditSaved={(id, value) => {
+                          handleExpenseEditSaved(expense.id, "due_date", value);
+                        }}
+                      />
+                    </td>
+                    <td className="text-left">
+                      <button
+                        className="text-button"
+                        onClick={() => {
+                          popup?.show(
+                            <SimpleDialog
+                              title="Confirm Delete"
+                              body="Are you sure you want to delete this Expense?"
+                              positiveAction={() => {
+                                handleExpenseDelete(expense.id);
+                              }}
+                            />
+                          );
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
     </div>
   );
 }

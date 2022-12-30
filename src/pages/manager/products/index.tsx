@@ -232,7 +232,7 @@ function ProductsIndex() {
                 <tr key={product.id + Math.random()} className="border-b">
                   <td>{index + 1}.</td>
                   <td className="text-left py-4 link">
-                    <Link to={`products/${product.id}`}>{product.name} </Link>
+                    <Link to={`${product.id}`}>{product.name} </Link>
                   </td>
                   <td className="text-left py-4 link">
                     <Link to={`categories/${product.category?.id}`}>
