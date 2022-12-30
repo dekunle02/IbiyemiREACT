@@ -8,6 +8,8 @@ import { usePopup } from "../../context/PopupContext";
 import { MdAdd } from "react-icons/md";
 import { formatRawDate } from "../../helpers/format-helpers";
 import SimpleDialog from "../../components/SimpleDialog";
+import Spinner from "../../components/Spinner";
+import LoadFailedMessage from "../../components/LoadFailedMessage";
 
 export default function Employees() {
   const django = useApi();
@@ -51,51 +53,56 @@ export default function Employees() {
           Add
         </button>
       </div>
-      <div className="flex flex-col my-2 p-1 lg:px-8">
-        <table className="w-full">
-          <thead className="border-b-2">
-            <tr className="my-2 text-left">
-              <th>#</th>
-              <th className="">Username</th>
-              <th className="">Last Login</th>
-              <th className="">Action</th>
-            </tr>
-          </thead>
 
-          <tbody>
-            {employeeArr.map((employee, index) => (
-              <tr key={employee.id} className="border-b">
-                <td>{index + 1}.</td>
-                <td className="text-left py-4">{employee.username}</td>
-                <td className="text-left py-4">
-                  {employee.last_login
-                    ? formatRawDate(employee.last_login)
-                    : "None"}
-                </td>
-
-                <td className="text-left">
-                  <button
-                    className="text-button"
-                    onClick={() => {
-                      popup?.show(
-                        <SimpleDialog
-                          title="Confirm Delete"
-                          body="Are you sure you want to delete this Employee? This is irreversible"
-                          positiveAction={() => {
-                            handleEmployeeDelete(employee.id);
-                          }}
-                        />
-                      );
-                    }}
-                  >
-                    Delete
-                  </button>
-                </td>
+      {loadState === LoadStates.Loading && <Spinner />}
+      {loadState === LoadStates.Failure && <LoadFailedMessage />}
+      {loadState === LoadStates.Success && (
+        <div className="flex flex-col my-2 p-1 lg:px-8">
+          <table className="w-full">
+            <thead className="border-b-2">
+              <tr className="my-2 text-left">
+                <th>#</th>
+                <th className="">Username</th>
+                <th className="">Last Login</th>
+                <th className="">Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+
+            <tbody>
+              {employeeArr.map((employee, index) => (
+                <tr key={employee.id} className="border-b">
+                  <td>{index + 1}.</td>
+                  <td className="text-left py-4">{employee.username}</td>
+                  <td className="text-left py-4">
+                    {employee.last_login
+                      ? formatRawDate(employee.last_login)
+                      : "None"}
+                  </td>
+
+                  <td className="text-left">
+                    <button
+                      className="text-button"
+                      onClick={() => {
+                        popup?.show(
+                          <SimpleDialog
+                            title="Confirm Delete"
+                            body="Are you sure you want to delete this Employee? This is irreversible"
+                            positiveAction={() => {
+                              handleEmployeeDelete(employee.id);
+                            }}
+                          />
+                        );
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 }
