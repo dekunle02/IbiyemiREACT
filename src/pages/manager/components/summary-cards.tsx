@@ -1,11 +1,5 @@
-import { useState, useEffect, useMemo } from "react";
-import { useApi } from "../../../context/AuthContext";
-import {
-  LoadStates,
-  PeriodOption,
-  ISO_DATE_FORMAT,
-} from "../../../constants/constants";
-import { DjangoClient, RequestStatus } from "../../../api/django";
+import { useMemo } from "react";
+import { LoadStates, PeriodOption } from "../../../constants/constants";
 import { Sale } from "../../../api/interfaces";
 import { formatMoney } from "../../../helpers/format-helpers";
 import Spinner from "../../../components/Spinner";

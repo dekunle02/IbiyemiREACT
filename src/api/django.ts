@@ -22,6 +22,9 @@ export type ClientResponse = Readonly<{
 export class DjangoClient {
   axiosInstance: AxiosInstance;
 
+  SUCCESS = RequestStatus.Success;
+  FAILURE = RequestStatus.Failure;
+
   constructor(token?: Token) {
     let baseUrl: string = "http://127.0.0.1:8000/api/v2/";
     if (process.env.REACT_APP_DEV_MODE === "False") {
@@ -213,11 +216,12 @@ export class DjangoClient {
 
   async getSaleItems(
     user: User | null = null,
-    startDate: string | null = null
+    startDate: string | null = null,
+    endDate: string | null = null
   ): Promise<ClientResponse> {
     return await this.axiosInstance
       .get("store/saleitems/", {
-        params: { user: user?.id, start_date: startDate },
+        params: { user: user?.id, start_date: startDate, end_date: endDate },
       })
       .then((response) => ({
         status: RequestStatus.Success,
@@ -315,11 +319,16 @@ export class DjangoClient {
   // SALES
   async getSales(
     startDate: string | null,
-    limit: number | null
+    limit: number | null,
+    endDate?: string | undefined
   ): Promise<ClientResponse> {
     return await this.axiosInstance
       .get("store/sales/", {
-        params: { start_date: startDate, limit: limit },
+        params: {
+          start_date: startDate,
+          limit: limit,
+          end_date: endDate,
+        },
       })
       .then((response) => ({
         status: RequestStatus.Success,
