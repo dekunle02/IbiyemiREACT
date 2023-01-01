@@ -10,6 +10,7 @@ import {
   ExpenseFormData,
   BusinessInfoFormData,
   UserFormData,
+  ProductFormData,
 } from "../constants/formData";
 import { User } from "./interfaces";
 
@@ -149,6 +150,58 @@ export class DjangoClient {
       .catch((error) => ({
         status: RequestStatus.Failure,
         data: { message: "Token Invalid" },
+      }));
+  }
+
+  async getProduct(id: number) {
+    return await this.axiosInstance
+      .get(`inventory/products/${id}`)
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: { message: "Token Invalid" },
+      }));
+  }
+
+  async addProduct(formData: ProductFormData) {
+    return await this.axiosInstance
+      .post("inventory/products/", formData)
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
+      }));
+  }
+
+  async editProduct(productId: number, formData: ProductFormData) {
+    return await this.axiosInstance
+      .patch(`inventory/products/${productId}/`, formData)
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
+      }));
+  }
+
+  async deleteProduct(id: number) {
+    return await this.axiosInstance
+      .delete(`inventory/products/${id}`)
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
       }));
   }
 

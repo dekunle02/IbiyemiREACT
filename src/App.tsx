@@ -40,7 +40,7 @@ import Shop from "./pages/manager/shop";
 import ProductLayout from "./pages/manager/products/layout";
 import ProductIndex from "./pages/manager/products/index";
 import ProductOutOfStock from "./pages/manager/products/products-out-stock";
-import ProductDetail from "./pages/manager/products/detail";
+import ProductAddEdit from "./pages/manager/products/add-edit";
 import CategoryList from "./pages/manager/products/category-list";
 import CategoryDetail from "./pages/manager/products/category-detail";
 import CategoryNew from "./pages/manager/products/category-new";
@@ -91,7 +91,8 @@ function App() {
                 <Route path=":id" element={<CategoryDetail />} />
               </Route>
               <Route path="out" element={<ProductOutOfStock />} />
-              <Route path=":id" element={<ProductDetail />} />
+              <Route path=":id" element={<ProductAddEdit />} />
+              <Route path="new" element={<ProductAddEdit />} />
             </Route>
 
             <Route path="sales" element={<Sales />} />

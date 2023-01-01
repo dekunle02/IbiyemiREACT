@@ -52,3 +52,19 @@ export type BusinessInfoFormData = {
   phone_numbers?: string;
   receipt_message?: string;
 };
+
+export type ProductFormData = {
+  name: string;
+  description?: string;
+  category?: number;
+  unit_cost_price: number;
+  unit_sell_price: number;
+  pack_cost_price?: number;
+  pack_sell_price?: number;
+  dozen_cost_price?: number;
+  dozen_sell_price?: number;
+  barcode?: string;
+  quantity: number;
+  notify_quantity?: number;
+  pack_quantity?: number;
+};
