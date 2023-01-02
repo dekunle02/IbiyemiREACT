@@ -41,6 +41,8 @@ import ProductLayout from "./pages/manager/products/layout";
 import ProductIndex from "./pages/manager/products/index";
 import ProductOutOfStock from "./pages/manager/products/products-out-stock";
 import ProductAddEdit from "./pages/manager/products/add-edit";
+import ProductMassEdit from "./pages/manager/products/mass-edit";
+
 import CategoryList from "./pages/manager/products/category-list";
 import CategoryDetail from "./pages/manager/products/category-detail";
 import CategoryNew from "./pages/manager/products/category-new";
@@ -93,8 +95,8 @@ function App() {
               <Route path="out" element={<ProductOutOfStock />} />
               <Route path=":id" element={<ProductAddEdit />} />
               <Route path="new" element={<ProductAddEdit />} />
+              <Route path="mass-edit" element={<ProductMassEdit />} />
             </Route>
-
             <Route path="sales" element={<Sales />} />
             <Route path="myshop" element={<Shop />} />
             <Route path="employees" element={<Employees />} />

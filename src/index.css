@@ -20,6 +20,10 @@
          px-5 py-2 active:bg-colorPrimaryDark hover:bg-colorPrimaryDark;
   }
 
+  .excel-cell {
+    @apply border px-2;
+  }
+
   .link {
     @apply hover:underline text-colorBlack/80;
   }
