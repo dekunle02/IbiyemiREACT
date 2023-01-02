@@ -3,7 +3,6 @@ import { useApi } from "../../../context/AuthContext";
 import { Product } from "../../../api/interfaces";
 import { LoadStates } from "../../../constants/constants";
 import EditableText from "../../../components/EditableText";
-import Spinner from "../../../components/Spinner";
 
 export default function ProductMassEdit() {
   const django = useApi();
@@ -42,7 +41,9 @@ export default function ProductMassEdit() {
       <h1 className="font-semibold text-3xl text-colorBlack/80 flex-grow">
         Edit ALL Products
       </h1>
-      {loadState === LoadStates.Loading && <Spinner />}
+      {loadState === LoadStates.Loading && (
+        <p className="text-center">Loading all products.....</p>
+      )}
       {loadState === LoadStates.Success && (
         <div className="border overflow-auto relative max-h-screen">
           <table className="text-left relative">

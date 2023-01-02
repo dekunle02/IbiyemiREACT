@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { useApi } from "../../../context/AuthContext";
 import { Product } from "../../../api/interfaces";
-import { MdCallMade, MdCategory, MdPrint, MdAdd } from "react-icons/md";
+import { MdCallMade, MdCategory, MdPrint, MdAdd, MdEdit } from "react-icons/md";
 import { HiX, HiOutlineSearch } from "react-icons/hi";
 import {
   commaSeparateNumber,
@@ -203,9 +203,13 @@ function ProductsIndex() {
           </button>
         </FormInput>
 
-        <Link to="new" className="text-lg button icon-button px-4">
+        <Link to="new" className="button icon-button px-4">
           <MdAdd />
           Add Product
+        </Link>
+        <Link to="mass-edit" className="button icon-button">
+          <MdEdit />
+          Edit ALL Products
         </Link>
       </div>
 
