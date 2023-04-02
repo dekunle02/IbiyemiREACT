@@ -142,11 +142,50 @@ export class DjangoClient {
     const filter_params: any = {};
     if (category) filter_params["category"] = category;
     return await this.axiosInstance
-      .get("inventory/products", { params: filter_params })
+      .get("inventory/products/", { params: filter_params })
       .then((response) => ({
         status: RequestStatus.Success,
         data: response.data as Product[],
       }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: { message: "Token Invalid" },
+      }));
+  }
+
+  async getSimpleProducts() {
+    return await this.axiosInstance
+      .get("inventory/simple-products/")
+      .then((response) => {
+        //            f"{product.id}|f{product.name}|f{product.quantity}|f{product.unit_sell_price}|f{product.pack_sell_price}|f{product.dozen_sell_price}|f{product.pack_quantity}"
+        const products: Product[] = (response.data as string[]).map(
+          (productString) => {
+            const [
+              id,
+              name,
+              quantity,
+              unit_sell_price,
+              pack_sell_price,
+              dozen_sell_price,
+              pack_quantity,
+            ] = productString.split("|");
+            return {
+              id: parseInt(id),
+              name: name,
+              quantity: parseInt(quantity),
+              unit_cost_price: 0,
+              unit_sell_price: parseInt(unit_sell_price),
+              pack_sell_price: parseInt(pack_sell_price),
+              dozen_sell_price: parseInt(dozen_sell_price),
+              pack_quantity: parseInt(pack_quantity),
+            };
+          }
+        );
+        return { status: RequestStatus.Success, data: products };
+
+        // status: RequestStatus.Success,
+        // data: response.data as Product[],
+      })
       .catch((error) => ({
         status: RequestStatus.Failure,
         data: { message: "Token Invalid" },

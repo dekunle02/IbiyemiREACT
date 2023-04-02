@@ -38,11 +38,11 @@ function ShopIndex() {
   const [loadState, setLoadState] = useState<LoadStates>(LoadStates.Loading);
 
   useEffect(() => {
-    django.getProducts().then((response) => {
+    django.getSimpleProducts().then((response) => {
       if (response.status === RequestStatus.Success) {
         setLoadState(LoadStates.Success);
-        setProductArr(response.data);
-        setDisplayedProductArr(response.data);
+        setProductArr(response.data as Product[]);
+        setDisplayedProductArr(response.data as Product[]);
       } else {
         setLoadState(LoadStates.Failure);
       }
@@ -148,8 +148,7 @@ function ShopIndex() {
                 ${
                   product.quantity === 0
                     ? "bg-colorRed/50"
-                    : product.notify_quantity &&
-                      product.quantity <= product.notify_quantity
+                    : product.quantity <= 5
                     ? "bg-orange-200"
                     : "bg-colorGreen/50"
                 }`}
