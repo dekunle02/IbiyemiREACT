@@ -1,4 +1,3 @@
-import { lazy } from "react";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -19,39 +18,30 @@ import CheckoutPage from "./pages/shop/CheckoutPage";
 import ReceiptPage from "./pages/shop/Receipt";
 
 // Profile
-const ProfileLayout = lazy(() => import("./pages/profile/layout"));
-const ProfileIndex = lazy(() => import("./pages/profile"));
-const ChangeUsername = lazy(() => import("./pages/profile/change-username"));
-const ChangePassword = lazy(() => import("./pages/profile/change-password"));
-const AddRemission = lazy(() => import("./pages/profile/add-remission"));
+import ProfileLayout from "./pages/profile/layout";
+import ProfileIndex from "./pages/profile";
+import ChangeUsername from "./pages/profile/change-username";
+import ChangePassword from "./pages/profile/change-password";
+import AddRemission from "./pages/profile/add-remission";
 
 // Manager
-const ManagerLayout = lazy(() => import("./pages/manager/layout"));
-const Dashboard = lazy(() => import("./pages/manager/dashboard"));
-const Employees = lazy(() => import("./pages/manager/employees"));
-const Sales = lazy(() => import("./pages/manager/sales"));
-const Shop = lazy(() => import("./pages/manager/shop"));
+import ManagerLayout from "./pages/manager/layout";
+import Dashboard from "./pages/manager/dashboard";
+import Employees from "./pages/manager/employees";
+import Sales from "./pages/manager/sales";
+import Shop from "./pages/manager/shop";
 
 // Products
-const ProductLayout = lazy(() => import("./pages/manager/products/layout"));
-const ProductIndex = lazy(() => import("./pages/manager/products/index"));
-const ProductOutOfStock = lazy(
-  () => import("./pages/manager/products/products-out-stock")
-);
-const ProductAddEdit = lazy(() => import("./pages/manager/products/add-edit"));
-const ProductMassEdit = lazy(
-  () => import("./pages/manager/products/mass-edit")
-);
-const CategoryList = lazy(
-  () => import("./pages/manager/products/category-list")
-);
-const CategoryDetail = lazy(
-  () => import("./pages/manager/products/category-detail")
-);
-const CategoryNew = lazy(() => import("./pages/manager/products/category-new"));
-const CategoryEdit = lazy(
-  () => import("./pages/manager/products/category-edit")
-);
+import ProductLayout from "./pages/manager/products/layout";
+import ProductIndex from "./pages/manager/products/index";
+import ProductOutOfStock from "./pages/manager/products/products-out-stock";
+import ProductAddEdit from "./pages/manager/products/add-edit";
+import ProductMassEdit from "./pages/manager/products/mass-edit";
+
+import CategoryList from "./pages/manager/products/category-list";
+import CategoryDetail from "./pages/manager/products/category-detail";
+import CategoryNew from "./pages/manager/products/category-new";
+import CategoryEdit from "./pages/manager/products/category-edit";
 
 function App() {
   return (
