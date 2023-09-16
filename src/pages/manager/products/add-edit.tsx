@@ -7,6 +7,7 @@ import { MdAdd, MdEdit } from "react-icons/md";
 import { FormInput, FormSelectInput } from "../../../components/FormInputv2";
 import { ProductFormData } from "../../../constants/formData";
 import Spinner from "../../../components/Spinner";
+import BackButton from "../../../components/BackButton";
 
 const DefaultProductFormData: ProductFormData = {
   name: "",
@@ -122,11 +123,12 @@ export default function ProductAddEdit() {
   return (
     <div>
       <div className="flex flex-row flex-wrap gap-2 relative items-center">
-        {product ? (
+        {/* {product ? (
           <MdEdit className="font-semibold text-3xl text-colorBlack/80" />
         ) : (
           <MdAdd className="font-semibold text-3xl text-colorBlack/80" />
-        )}
+        )} */}
+        <BackButton relative />
         <h1 className="font-semibold text-3xl text-colorBlack/80 flex-grow">
           {product ? "Edit Product" : "Create A Product"}
         </h1>

@@ -231,7 +231,7 @@ export class DjangoClient {
       }));
   }
 
-  async deleteProduct(id: number) {
+  async deleteProduct(id: number | string) {
     return await this.axiosInstance
       .delete(`inventory/products/${id}`)
       .then((response) => ({
@@ -509,6 +509,25 @@ export class DjangoClient {
     return await this.axiosInstance
       .get("store/saleitems/", {
         params: { user: user?.id, start_date: startDate, end_date: endDate },
+      })
+      .then((response) => ({
+        status: RequestStatus.Success,
+        data: response.data,
+      }))
+      .catch((error) => ({
+        status: RequestStatus.Failure,
+        data: error.response.data,
+      }));
+  }
+
+  async getSaleItemsGeneric(params: {
+    start_date?: string;
+    end_date?: string;
+    product?: string;
+  }): Promise<ClientResponse> {
+    return await this.axiosInstance
+      .get("store/saleitems/", {
+        params: params,
       })
       .then((response) => ({
         status: RequestStatus.Success,
