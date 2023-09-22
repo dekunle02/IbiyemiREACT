@@ -130,6 +130,13 @@ export default function ProductDetail() {
         </h5>
       </div>
 
+      <div className="mt-2">
+        <h2>
+          Description:{" "}
+          {product.description === "" ? "N/A" : product.description}
+        </h2>
+      </div>
+
       <div className="flex flex-row items-center justify-between mt-10 mb-5 w-full">
         <h6 className="text-xl text-colorPrimary">Sales History</h6>
         <DateRangePicker dateRange={dateRange} onChange={handleDateChange} />
