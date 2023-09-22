@@ -3,7 +3,6 @@ import { Product, Category } from "../../../api/interfaces";
 import { useNavigate, useParams } from "react-router-dom";
 import { useApi } from "../../../context/AuthContext";
 import { LoadStates } from "../../../constants/constants";
-import { MdAdd, MdEdit } from "react-icons/md";
 import { FormInput, FormSelectInput } from "../../../components/FormInputv2";
 import { ProductFormData } from "../../../constants/formData";
 import Spinner from "../../../components/Spinner";
@@ -231,6 +230,14 @@ export default function ProductAddEdit() {
           onChange={handleFormChange}
           label="Selling price of a Dozen (₦)"
           value={productFormData?.dozen_sell_price}
+        />
+
+        <FormInput
+          id="description"
+          type="textarea"
+          onChange={handleFormChange}
+          label="Description"
+          value={productFormData?.description}
         />
 
         <button className="button w-3/4 lg:w-1/2 mx-auto">Save</button>
